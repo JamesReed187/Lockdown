@@ -2,11 +2,10 @@ extends Node
 
 @onready var main_menu = $CanvasLayer/MainMenu
 @onready var address_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/AddressEntry
-@onready var hud = $CanvasLayer/HUD
-@onready var health_bar = $CanvasLayer/HUD/HealthBar
+@onready var hud = $UserInterface
 
 
-@onready var Player = preload("res://scenes/player.tscn")
+@onready var Player = preload("res://controllers/fps_controller.tscn")
 #@onready var Player = $Player
 var tracked = false
 var player
@@ -35,9 +34,9 @@ func _on_join_button_pressed():
 	enet_peer.create_client(address_entry.text, PORT)
 	multiplayer.multiplayer_peer = enet_peer
 
-func _on_multiplayer_spawner_spawned(node):
-	if node.is_multiplayer_authority():
-		node.health_changed.connect(update_health_bar)
+#func _on_multiplayer_spawner_spawned(node):
+	#if node.is_multiplayer_authority():
+		#node.health_changed.connect(update_health_bar)
 func upnp_setup():
 	var upnp = UPNP.new()
 	
@@ -54,11 +53,17 @@ func upnp_setup():
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Global.reserveLabel = %Reserve
+	Global.interactionLabel = %InteractionLabel
+	Global.clipLabel = %Clip
+	Global.pointsLabel = %Points
+	Global.healthLabel = %Health
 
 
 func _physics_process(delta):
-	if tracked:
-		get_tree().call_group("enemy", "update_target_location", player.global_transform.origin)
+	pass
+	#if tracked:
+		#get_tree().call_group("enemy", "update_target_location", player.global_transform.origin)
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit"):
@@ -76,13 +81,10 @@ func add_player(peer_id):
 	player.name = str(peer_id)
 	add_child(player)
 	tracked = true
-	if player.is_multiplayer_authority():
-		player.health_changed.connect(update_health_bar)
+	#if player.is_multiplayer_authority():
+		#player.health_changed.connect(update_health_bar)
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
-
-func update_health_bar(health_value):
-	health_bar.value = health_value
