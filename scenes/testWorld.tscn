@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://dvspsmhr73myh" path="res://controllers/scripts/debug_panel.gd" id="6_r1245"]
 [ext_resource type="LabelSettings" uid="uid://dskxen8j6183q" path="res://controllers/materials/Ammo Counter Label Settings.tres" id="7_ftq4a"]
 [ext_resource type="LabelSettings" uid="uid://ymbpk3yphr8i" path="res://controllers/materials/InteractionLabelSettings.tres" id="8_8b5ia"]
+[ext_resource type="PackedScene" uid="uid://dyf8bobfk30yv" path="res://scenes/Item pedestal.tscn" id="9_lwfgy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u5pdl"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -114,7 +115,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="Reticle" type="CenterContainer" parent="UserInterface" unique_id=949750882 node_paths=PackedStringArray("reticleLines", "playerController")]
+[node name="Reticle" type="CenterContainer" parent="UserInterface" unique_id=949750882 node_paths=PackedStringArray("reticleLines")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -129,7 +130,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_0ddhe")
 reticleLines = [NodePath("Top"), NodePath("Right"), NodePath("Bottom"), NodePath("Left")]
-playerController = NodePath("")
 
 [node name="Top" type="Line2D" parent="UserInterface/Reticle" unique_id=1732098349]
 position = Vector2(20, 20)
@@ -274,6 +274,9 @@ layout_mode = 2
 size_flags_horizontal = 6
 text = "TestTest"
 label_settings = SubResource("LabelSettings_cdpo3")
+
+[node name="ItemPedestal" parent="." unique_id=1849080789 instance=ExtResource("9_lwfgy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.567147, 0.625, -0.56337714)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
