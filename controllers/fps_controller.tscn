@@ -1015,6 +1015,11 @@ metadata/_custom_type_script = "uid://chrx5rfmff27h"
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1236917909]
 replication_config = SubResource("SceneReplicationConfig_fdopr")
 
+[node name="testNameLabel" type="Label3D" parent="." unique_id=939402641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1072268, 0)
+billboard = 1
+text = "get real"
+
 [connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]
 
 [editable path="CameraController/Camera3D/WeaponRig/Weapon"]

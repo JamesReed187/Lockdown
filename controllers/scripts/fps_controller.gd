@@ -11,6 +11,7 @@ extends CharacterBody3D
 @onready var weaponController : WeaponController = $CameraController/Camera3D/WeaponRig/Weapon
 @onready var hud = $UserInterface
 @onready var animationPlayer = $"Level Fade"
+@onready var playerlabelname = $testNameLabel
 @onready var stateMachine = $PlayerStateMachine
 
 var _mouse_input : bool = false
@@ -85,10 +86,11 @@ func _physics_process(delta):
 	if not is_multiplayer_authority(): return
 	# Update camera movement based on mouse movement
 	_update_camera(delta)
+
 	Global.debug.addProperty("Stamina", stamina, 2)
 	if stamina < 101 and stateMachine.currentState != $PlayerStateMachine/SprintingPlayerState:
 		stamina += ceil(16.5 * delta)
-	
+	playerlabelname.text = str(multiplayer.get_unique_id())
 	
 	## Add the gravity.
 	#if not is_on_floor():

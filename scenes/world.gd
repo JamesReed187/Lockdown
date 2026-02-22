@@ -25,7 +25,7 @@ func _on_host_button_pressed():
 	multiplayer.peer_disconnected.connect(remove_player)
 	
 	add_player(multiplayer.get_unique_id())
-	
+	print  ("getuniqueid is " + str(multiplayer.get_unique_id()))
 	#upnp_setup()
 func _on_join_button_pressed():
 	main_menu.hide()
@@ -81,6 +81,7 @@ func add_player(peer_id):
 	player.name = str(peer_id)
 	add_child(player)
 	tracked = true
+	print (str(peer_id) + " has joined")
 	#if player.is_multiplayer_authority():
 		#player.health_changed.connect(update_health_bar)
 
