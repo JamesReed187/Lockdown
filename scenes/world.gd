@@ -92,11 +92,14 @@ func add_player(peer_id):
 	#if player.is_multiplayer_authority():
 		#player.health_changed.connect(update_health_bar)
 
+@rpc ("authority")
+func removeplayercount():
+	playercount -= 1 #removes player from playercount
+	print ("playercount is " + str(playercount)) #prints that
+
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
-		playercount -= 1 #removes player from playercount
-		print ("playercount is " + str(playercount)) #prints that
 		player.queue_free()
 
 func assign_team(id):

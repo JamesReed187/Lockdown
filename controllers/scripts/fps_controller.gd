@@ -100,7 +100,9 @@ func _physics_process(delta):
 	CAMERA_CONTROLLER.rotation = lerp(CAMERA_CONTROLLER.rotation, CAMERA_CONTROLLER.rotation + cameraOffset, 0.1)
 	cameraOffset = lerp(cameraOffset, Vector3(0,0,0), 0.05)
 	
-	
+	if Input.is_action_just_pressed("PauseMenu"):
+		deboggled()
+		
 func updateGravity(delta) -> void:
 	if not is_multiplayer_authority(): return
 	velocity.y -= gravity * delta
@@ -136,6 +138,11 @@ func take_damage(damage, type, team):
 			velocity = Vector3(0, 0, 0)
 			Global.playerHealth = 100
 
+func deboggled(): #this probably isnt the best way to do this but it works
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE #Un-captures the mouse
+	elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED #Re-captures the mouse
 #THIS NEEDS UPDATING TO NEW UI PLEASE
 #WILL BE ANNOUNCEMENT TEXT NOT LEVEL CHANGE
 #func showLevelText(spawnText):
