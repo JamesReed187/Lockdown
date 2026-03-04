@@ -127,6 +127,7 @@ func updateVelocity() -> void:
 
 @rpc("any_peer")
 func take_damage(damage, type, team):
+	print(team)
 	if team != Global.myCurrentTeam:
 		Global.playerHealth -= damage
 		Global.updateHealth()

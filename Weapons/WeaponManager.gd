@@ -298,7 +298,7 @@ func shoot() -> void:
 					if hitBody.has_method("take_enemy_damage"):
 						hitBody.take_enemy_damage(weaponType.Damage, "bullet")
 					elif hitBody.has_method("take_damage"):
-						hitBody.take_damage.rpc_id(hitBody.get_multiplayer_authority(), weaponType.Damage, "bullet")  # Deal damage to the enemy
+						hitBody.take_damage.rpc_id(hitBody.get_multiplayer_authority(), weaponType.Damage, "bullet", Global.myCurrentTeam)  # Deal damage to the enemy
 
 		#If the weapon is a projectile weapon then shoot a projectile not a raycast
 		if weaponGlobal.weaponBulletPhysics == "Projectile":
