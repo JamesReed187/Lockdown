@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://tr2q5pr3ckes" path="res://scenes/chatbox.gd" id="1_q4hop"]
 
-[node name="Chatbox" type="Node2D" unique_id=18944203]
+[node name="chatbot" type="Node2D" unique_id=18944203]
 script = ExtResource("1_q4hop")
 
 [node name="Message" type="LineEdit" parent="." unique_id=570877862]
@@ -13,9 +13,9 @@ offset_bottom = 316.0
 placeholder_text = "message"
 
 [node name="Send" type="Button" parent="." unique_id=463245356]
-offset_left = 115.0
+offset_left = 118.0
 offset_top = 317.0
-offset_right = 172.0
+offset_right = 167.0
 offset_bottom = 348.0
 text = "Send"
 
@@ -25,3 +25,5 @@ offset_top = 157.0
 offset_right = 302.0
 offset_bottom = 286.0
 editable = false
+
+[connection signal="pressed" from="Send" to="." method="_on_send_pressed"]

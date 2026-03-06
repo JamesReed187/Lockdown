@@ -9,6 +9,7 @@
 [ext_resource type="LabelSettings" uid="uid://dskxen8j6183q" path="res://controllers/materials/Ammo Counter Label Settings.tres" id="7_ftq4a"]
 [ext_resource type="LabelSettings" uid="uid://ymbpk3yphr8i" path="res://controllers/materials/InteractionLabelSettings.tres" id="8_8b5ia"]
 [ext_resource type="PackedScene" uid="uid://dyf8bobfk30yv" path="res://scenes/Item pedestal.tscn" id="9_lwfgy"]
+[ext_resource type="PackedScene" uid="uid://1gk8wgub7vvt" path="res://scenes/chatbox.tscn" id="10_r1245"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u5pdl"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -277,6 +278,9 @@ label_settings = SubResource("LabelSettings_cdpo3")
 
 [node name="ItemPedestal" parent="." unique_id=1849080789 instance=ExtResource("9_lwfgy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.567147, 0.625, -0.56337714)
+
+[node name="Chatbox" parent="." unique_id=18944203 instance=ExtResource("10_r1245")]
+position = Vector2(-109, 294)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
