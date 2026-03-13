@@ -25,6 +25,7 @@ var isCrouching : bool = false
 var currentRotation : float
 var cameraOffset : Vector3
 
+var isPaused : bool = false
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var gravity = 12
@@ -138,11 +139,16 @@ func take_damage(damage, type, team):
 			velocity = Vector3(0, 0, 0)
 			Global.playerHealth = 100
 
+#Pausing system
 func deboggled(): #this probably isnt the best way to do this but it works
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE #Un-captures the mouse
+		isPaused = true
 	elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED #Re-captures the mouse
+		isPaused = false
+	print(str(isPaused))
+
 #THIS NEEDS UPDATING TO NEW UI PLEASE
 #WILL BE ANNOUNCEMENT TEXT NOT LEVEL CHANGE
 #func showLevelText(spawnText):

@@ -9,6 +9,7 @@
 [ext_resource type="LabelSettings" uid="uid://dskxen8j6183q" path="res://controllers/materials/Ammo Counter Label Settings.tres" id="7_ftq4a"]
 [ext_resource type="LabelSettings" uid="uid://ymbpk3yphr8i" path="res://controllers/materials/InteractionLabelSettings.tres" id="8_8b5ia"]
 [ext_resource type="PackedScene" uid="uid://dyf8bobfk30yv" path="res://scenes/Item pedestal.tscn" id="9_lwfgy"]
+[ext_resource type="Theme" uid="uid://b4n6esmn2elnd" path="res://Themes/PauseMenuTheme.tres" id="10_r1245"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u5pdl"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -274,8 +275,64 @@ size_flags_horizontal = 6
 text = "TestTest"
 label_settings = SubResource("LabelSettings_cdpo3")
 
+[node name="MYidVbox" type="VBoxContainer" parent="UserInterface" unique_id=413844586]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 6.0
+offset_right = 1143.0
+offset_bottom = 77.0
+
+[node name="MyIdLabel" type="Label" parent="UserInterface/MYidVbox" unique_id=1674277987]
+unique_name_in_owner = true
+layout_mode = 2
+text = "aaaawagga"
+
 [node name="ItemPedestal" parent="." unique_id=1849080789 instance=ExtResource("9_lwfgy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.567147, 0.625, -0.56337714)
+
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=957366646]
+visible = false
+
+[node name="PausePanel" type="Panel" parent="PauseLayer" unique_id=912028623]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -298.0
+offset_top = -215.0
+offset_right = 298.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("10_r1245")
+
+[node name="PauseVbox" type="VBoxContainer" parent="PauseLayer/PausePanel" unique_id=384442870]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.5
+offset_top = -25.0
+offset_right = 48.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="PauseLayer/PausePanel/PauseVbox" unique_id=2115988080]
+layout_mode = 2
+text = "heeheehoo"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="PauseLayer/PausePanel/PauseVbox" unique_id=1246233509]
+layout_mode = 2
+text = "ooheehehee"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]

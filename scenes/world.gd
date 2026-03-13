@@ -3,8 +3,8 @@ extends Node
 @onready var main_menu = $CanvasLayer/MainMenu
 @onready var address_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/AddressEntry
 @onready var hud = $UserInterface
-
-
+@onready var myIDref = multiplayer.get_unique_id()
+@onready var pause_Menu = $PausePanel
 @onready var Player = preload("res://controllers/fps_controller.tscn")
 #@onready var Player = $Player
 var tracked = false
@@ -62,7 +62,6 @@ func _ready() -> void:
 	Global.pointsLabel = %Points
 	Global.healthLabel = %Health
 
-
 func _physics_process(delta):
 	pass
 	#if tracked:
@@ -78,7 +77,6 @@ func _on_single_player_button_pressed():
 	var my_id = multiplayer.get_unique_id()
 	#multiplayer.multiplayer_peer = enet_peer
 	add_player(my_id)
-	
 
 
 func add_player(peer_id):
@@ -91,12 +89,10 @@ func add_player(peer_id):
 	print ("playercount is " + str(playercount)) #prints playercount
 	#if player.is_multiplayer_authority():
 		#player.health_changed.connect(update_health_bar)
-
 @rpc ("authority")
 func removeplayercount():
 	playercount -= 1 #removes player from playercount
 	print ("playercount is " + str(playercount)) #prints that
-
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
