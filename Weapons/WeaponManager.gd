@@ -152,7 +152,7 @@ func loadWeapon():
 			weaponType = load(weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex])
 		else:
 			weaponType = load("res://Weapons/Empty Weapon.tres")
-		Global.rpc("replicateSpecificObject", Global.player.name, "replicateWeaponVisual", weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex])
+		
 	
 	#These variables hold all the data from the weapon and are access everywhere
 	#in this script for various core functionality
@@ -223,6 +223,9 @@ func loadWeapon():
 		weaponGlobal.weaponAccuracy = weaponType.Accuracy
 		weaponGlobal.verticalRecoil = weaponType.verticalRecoil
 		weaponGlobal.horizontalRecoil = weaponType.horizontalRecoil
+		print(weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex])
+		Global.rpc("replicateSpecificObject", str(get_path()), "replicateWeaponVisual", weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex])
+		
 		
 
 #Controls the sway of the weapon given the values from the loaded weapon
@@ -459,7 +462,7 @@ func dropWeapon():
 		
 		#Fall back incase after you drop the weapon is not an empty weapon
 		if weaponType != load("res://Weapons/Empty Weapon.tres"):
-			weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex] = null
+			weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex] = load("res://Weapons/Empty Weapon.tres")
 			loadWeapon()
 
 		#Replicates the drop to the other players on the server
@@ -505,6 +508,7 @@ func addAmmo(clipAdd, reserveAdd):
 	weaponGlobal.reserveAmmo += reserveAdd
 	Global.clipLabel.text = str(weaponGlobal.clipAmmo)
 	Global.reserveLabel.text = str(weaponGlobal.reserveAmmo)
+
 
 
 #func _physics_process(delta) -> void:
