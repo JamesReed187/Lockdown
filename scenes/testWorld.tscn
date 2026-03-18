@@ -280,7 +280,7 @@ label_settings = SubResource("LabelSettings_cdpo3")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.567147, 0.625, -0.56337714)
 
 [node name="Chatbox" parent="." unique_id=18944203 instance=ExtResource("10_r1245")]
-position = Vector2(-109, 294)
+position = Vector2(-103, 266)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
