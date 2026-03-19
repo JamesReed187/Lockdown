@@ -5,6 +5,8 @@ extends Node
 @onready var hud = $UserInterface
 
 @onready var GUI = $GUItasktest
+@onready var GUI_viewport = %SubViewport
+@export var GUI_window: Window 
 
 @onready var Player = preload("res://controllers/fps_controller.tscn")
 #@onready var Player = $Player
@@ -90,7 +92,7 @@ func add_player(peer_id):
 		#player.health_changed.connect(update_health_bar)
 
 func remove_player(peer_id):
-	var player = get_node_or_null(str(peer_id))
+	player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
 
@@ -139,10 +141,11 @@ func _on_guitasktest_pressed() -> void:
 	get_tree().change_scene_to_file("res://gameMechanics/hacking_minitask.tscn")
 
 
-
-func _on_area_3d_body_entered(body: Player) -> void:
+func _GUI_window_open(_body: Player) -> void:
+	var minitask = preload("res://gameMechanics/hacking_minitask.tscn").instantiate()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE # Release mouse
 	GUI.show()
-	var minitask = load("res://gameMechanics/hacking_minitask.tscn").instantiate()
-	GUI.add_child(minitask)
-	print("Player interacted with game mechanic")
+	GUI_viewport.add_child(minitask)
+	print("player interacted with minitask")
+	if GUI_window != null:
+		GUI_window.emit_signal("close_requested")

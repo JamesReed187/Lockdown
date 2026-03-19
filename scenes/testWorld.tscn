@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_ctiuy"]
 [ext_resource type="PackedScene" uid="uid://c1j7an8woikyd" path="res://scenes/environment.tscn" id="2_fr3vy"]
+[ext_resource type="Script" uid="uid://cw5iw0tdrx43u" path="res://gameMechanics/guitasktest.gd" id="3_ftq4a"]
 [ext_resource type="PackedScene" uid="uid://5k1o5ctvtah6" path="res://scenes/enemy.tscn" id="3_nule3"]
 [ext_resource type="Script" uid="uid://da4bqfupciool" path="res://controllers/reticle.gd" id="4_0ddhe"]
 [ext_resource type="Theme" uid="uid://de2nek577lf7m" path="res://controllers/Themes/UI/Debug.tres" id="5_lwfgy"]
@@ -24,6 +25,10 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwfgy"]
+albedo_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r1245"]
+albedo_color = Color(0.06863427, 0.015218134, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ftq4a"]
 
@@ -51,6 +56,19 @@ environment = SubResource("Environment_6knbf")
 transform = Transform3D(0.7496261, 0, -0.66186154, 0, 1, 0, 0.66186154, 0, 0.7496261, 3.0717387, 0.42535555, -4.0354357)
 material = SubResource("StandardMaterial3D_lwfgy")
 
+[node name="box1" type="CSGBox3D" parent="InteractableTest" unique_id=1095838843]
+transform = Transform3D(0.99896884, 0.03652684, 0.02698183, -0.04016888, 0.98789424, 0.14983608, -0.021181762, -0.15076561, 0.9883425, 0.017092466, 0.6663114, -0.18535471)
+size = Vector3(0.991333, 0.51708984, 0.84484863)
+
+[node name="box2" type="CSGBox3D" parent="InteractableTest" unique_id=1519202313]
+transform = Transform3D(0.9999504, 0.0012059435, -0.00995627, -0.0033301376, 0.976345, -0.21619232, 0.009460539, 0.21621434, 0.9762998, 0.0040130615, 0.05216068, 0.15871859)
+size = Vector3(0.991333, 0.923584, 0.84484863)
+
+[node name="box3" type="CSGBox3D" parent="InteractableTest" unique_id=53582541]
+transform = Transform3D(0.99841845, 0.0024832934, 0.056176186, -0.020202108, 0.948165, 0.31713584, -0.052476585, -0.31776893, 0.9467151, 0.014845133, 0.6550026, 0.24667215)
+size = Vector3(0.7612793, 0.48344725, 0.14035645)
+material = SubResource("StandardMaterial3D_r1245")
+
 [node name="Area3D" type="Area3D" parent="InteractableTest" unique_id=2031648996]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableTest/Area3D" unique_id=1640450757]
@@ -62,22 +80,45 @@ oversampling_override = 1.0
 title = "Minitask test"
 initial_position = 2
 size = Vector2i(900, 500)
+transient = true
+transient_to_focused = true
+exclusive = true
+script = ExtResource("3_ftq4a")
 
-[node name="Camera3D" type="Camera3D" parent="GUItasktest" unique_id=144988928]
-transform = Transform3D(0.6735674, 0, -0.7391258, 0, 1, 0, 0.7391258, 0, 0.6735674, 1.9815505, 1.1144612, -3.0262656)
-visible = false
-visibility_parent = NodePath("../../InteractableTest")
+[node name="GUI" type="CanvasLayer" parent="GUItasktest" unique_id=183574257]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="GUItasktest" unique_id=1071161576]
-offset_right = 900.0
-offset_bottom = 500.0
+[node name="Panel" type="Panel" parent="GUItasktest/GUI" unique_id=923370294]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GUItasktest/GUI/Panel" unique_id=1071161576]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="GUItasktest/SubViewportContainer" unique_id=1617212057]
+[node name="SubViewport" type="SubViewport" parent="GUItasktest/GUI/Panel/SubViewportContainer" unique_id=1617212057]
+unique_name_in_owner = true
 handle_input_locally = false
 size = Vector2i(900, 500)
+size_2d_override = Vector2i(1150, 650)
+size_2d_override_stretch = true
 render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="GUItasktest" unique_id=144988928]
+transform = Transform3D(0.6735674, 0, -0.7391258, 0, 1, 0, 0.7391258, 0, 0.6735674, 1.9815508, 1.2883507, -3.0262659)
+visible = false
+visibility_parent = NodePath("../../InteractableTest")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=781029339]
 
@@ -126,7 +167,8 @@ layout_mode = 2
 placeholder_text = "Enter Address to Join Here"
 alignment = 1
 
-[node name="TEST" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1440372615]
+[node name="GUItest" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1440372615]
+visible = false
 layout_mode = 2
 text = "GUI minitask scene test"
 
@@ -319,9 +361,10 @@ label_settings = SubResource("LabelSettings_cdpo3")
 [node name="ItemPedestal" parent="." unique_id=1849080789 instance=ExtResource("9_lwfgy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.567147, 0.625, -0.56337714)
 
-[connection signal="body_entered" from="InteractableTest/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="InteractableTest/Area3D" to="." method="_GUI_window_open"]
+[connection signal="close_requested" from="GUItasktest" to="GUItasktest" method="_GUI_window_close"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/TEST" to="." method="_on_guitasktest_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/GUItest" to="." method="_on_guitasktest_pressed"]
 [connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

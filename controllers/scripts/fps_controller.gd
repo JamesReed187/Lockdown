@@ -25,6 +25,7 @@ var isCrouching : bool = false
 var currentRotation : float
 var cameraOffset : Vector3
 
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 #var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var gravity = 12
@@ -81,6 +82,9 @@ func _ready():
 	CROUCH_SHAPECAST.add_exception($".")
 	#THIS WILL BE ANNOUNCE NOT LEVEL CHANGE TEXT
 	#showLevelText("This is a test for if robbers got something")
+
+
+
 
 func _physics_process(delta):
 	if not is_multiplayer_authority(): return
