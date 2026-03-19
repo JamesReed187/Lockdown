@@ -11,7 +11,7 @@ func _process(_delta: float) -> void:
 	pass
 
 
-func _GUI_window_close(_body: Node3D) -> void:
+func _GUI_window_close() -> void:
 	self.hide()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	print("player closed minitask")
