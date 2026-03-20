@@ -67,15 +67,6 @@ func upnp_setup():
 	
 	print("Success! Join Address: %s" % upnp.query_external_address())
 
-
-func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	Global.reserveLabel = %Reserve
-	Global.interactionLabel = %InteractionLabel
-	Global.clipLabel = %Clip
-	Global.pointsLabel = %Points
-	Global.healthLabel = %Health
-
 func _physics_process(delta):
 	if Input.is_action_just_pressed("PauseMenu"):
 		deboggled()
