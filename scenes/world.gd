@@ -21,17 +21,6 @@ const PORT = 9999
 var enet_peer = ENetMultiplayerPeer.new()
 
 
-func _ready():
-
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-	Global.reserveLabel = %Reserve
-	Global.interactionLabel = %InteractionLabel
-	Global.clipLabel = %Clip
-	Global.pointsLabel = %Points
-	Global.healthLabel = %Health
-
-
 func _on_host_button_pressed():
 
 	main_menu.hide()
