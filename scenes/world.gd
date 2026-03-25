@@ -11,6 +11,10 @@ extends Node
 
 @onready var Player = preload("res://controllers/fps_controller.tscn")
 #@onready var Player = $Player
+
+@onready var cop_spawns = $SpawnPoints2/Cops.get_children()
+@onready var robber_spawns = $SpawnPoints2/Robber.get_children()
+
 @onready var pauseHUD = $PauseLayer
 var tracked = false
 var player
@@ -19,17 +23,6 @@ var playercount = 0
 var isPaused : bool = false
 const PORT = 9999
 var enet_peer = ENetMultiplayerPeer.new()
-
-
-func _ready():
-
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-	Global.reserveLabel = %Reserve
-	Global.interactionLabel = %InteractionLabel
-	Global.clipLabel = %Clip
-	Global.pointsLabel = %Points
-	Global.healthLabel = %Health
 
 
 func _on_host_button_pressed():
