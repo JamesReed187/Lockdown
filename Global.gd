@@ -2,6 +2,14 @@
 
 extends Node
 
+@export var is_frozen: bool = false
+
+func un_frozen(frozen: bool):
+	is_frozen = frozen
+	if not is_frozen:
+		Player.process_mode = Node.PROCESS_MODE_INHERIT
+		print("player_is_unfrozen")
+
 
 var player
 var playerPoints = 0:
@@ -50,7 +58,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
 
