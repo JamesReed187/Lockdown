@@ -10,10 +10,11 @@ extends CharacterBody3D
 @onready var ANIMATIONPLAYER : AnimationPlayer = $AnimationPlayer
 @onready var CROUCH_SHAPECAST : Node3D = %ShapeCast3D
 @onready var weaponController : WeaponController = $CameraController/Camera3D/WeaponRig/Weapon
-@onready var hud = $UserInterface
 @onready var animationPlayer = $"Level Fade"
 @onready var playerlabelname = $testNameLabel
 @onready var stateMachine = $PlayerStateMachine
+@onready var copModel = $"CollisionShape3D/Cop model"
+@onready var robberModel = $"CollisionShape3D/Robber model"
 
 var _mouse_input : bool = false
 var _rotation_input : float
@@ -29,11 +30,8 @@ var cameraOffset : Vector3
 var gravity = 12
 var stamina = 100
 
-
 func _enter_tree():
-	print(name)
 	set_multiplayer_authority(str(name).to_int())
-
 
 func _ready():
 
@@ -51,7 +49,6 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	CROUCH_SHAPECAST.add_exception(self)
-
 
 func _unhandled_input(event: InputEvent) -> void:
 
@@ -95,6 +92,9 @@ func _update_camera(delta):
 	_tilt_input = 0.0
 
 
+
+
+
 func _physics_process(delta):
 
 	if not is_multiplayer_authority():
@@ -109,10 +109,14 @@ func _physics_process(delta):
 		stamina += ceil(16.5 * delta)
 
 	playerlabelname.text = str(multiplayer.get_unique_id())
-
+	
+	
+	## Add the gravity.
+	#if not is_on_floor():
+		#velocity.y -= gravity * delta
 	CAMERA_CONTROLLER.rotation = lerp(CAMERA_CONTROLLER.rotation, CAMERA_CONTROLLER.rotation + cameraOffset, 0.1)
-	cameraOffset = lerp(cameraOffset, Vector3.ZERO, 0.05)
-
+	cameraOffset = lerp(cameraOffset, Vector3(0,0,0), 0.05)
+	
 
 func updateGravity(delta) -> void:
 
@@ -150,7 +154,6 @@ func updateVelocity() -> void:
 
 @rpc("any_peer")
 func take_damage(damage, type, team):
-
 	if team != Global.myCurrentTeam:
 
 		Global.playerHealth -= damage
@@ -158,3 +161,20 @@ func take_damage(damage, type, team):
 
 		if Global.playerHealth <= 0:
 			Global.playerHealth = 100
+
+
+func updatePlayerModel():
+	if Global.myCurrentTeam == "Cop":
+		copModel.visible = true
+	elif Global.myCurrentTeam == "Robber":
+		robberModel.visible = true
+#Pausing system
+
+
+#THIS NEEDS UPDATING TO NEW UI PLEASE
+#WILL BE ANNOUNCEMENT TEXT NOT LEVEL CHANGE
+#func showLevelText(spawnText):
+	#%"Spawn Label".text = spawnText
+	#animationPlayer.play("Level Fade", -1, 1, false)
+	#await animationPlayer.animation_finished
+	#animationPlayer.play("Level Fade", -1, -1, true)

@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" uid="uid://dgpa2g1406d8w" path="res://controllers/scripts/fps_controller.gd" id="1_pgc1p"]
-[ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://controllers/materials/player.tres" id="2_gldw4"]
+[ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://controllers/materials/Robber Material.tres" id="2_gldw4"]
 [ext_resource type="PackedScene" uid="uid://csj7vcqrenjsi" path="res://Weapons/Weapon.tscn" id="3_eikvl"]
+[ext_resource type="Material" uid="uid://bv7v0hte38tgr" path="res://controllers/materials/Cop Material.tres" id="3_yvtcv"]
 [ext_resource type="Script" uid="uid://chelsy2m60l2o" path="res://controllers/scripts/interaction_cast.gd" id="4_tg6sc"]
 [ext_resource type="Resource" uid="uid://sc0678yoejno" path="res://Weapons/Blaster.tres" id="4_yvtcv"]
 [ext_resource type="ArrayMesh" uid="uid://0tohxaimc3a8" path="res://Weapons/Models/Pistol/MX1 Blaster.res" id="5_h7h5r"]
@@ -22,6 +23,9 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6tv51"]
 material = ExtResource("2_gldw4")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_h7h5r"]
+material = ExtResource("3_yvtcv")
 
 [sub_resource type="Animation" id="Animation_0cng4"]
 length = 0.01
@@ -895,6 +899,12 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath("CameraController/Camera3D:position")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("CollisionShape3D/Robber model:visible")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("CollisionShape3D/Cop model:visible")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=1200792928]
 script = ExtResource("1_pgc1p")
@@ -904,9 +914,15 @@ MOUSE_SENSITIVITY = 0.15
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_bygp4")
 
-[node name="PlaceholderMesh" type="MeshInstance3D" parent="CollisionShape3D" unique_id=2120339349]
+[node name="Robber model" type="MeshInstance3D" parent="CollisionShape3D" unique_id=2120339349]
 transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 0.75, 0, 0, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_6tv51")
+
+[node name="Cop model" type="MeshInstance3D" parent="CollisionShape3D" unique_id=1258850164]
+transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 0.75, 0, 0, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_h7h5r")
 
 [node name="CameraController" type="Node3D" parent="." unique_id=1203649444]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

@@ -9,7 +9,6 @@
 script = ExtResource("3_r1os2")
 name = &"Revolver"
 Damage = 50
-weight = 5
 clip = 6
 maxClip = 6
 reserve = 60

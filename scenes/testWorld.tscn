@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_ctiuy"]
 [ext_resource type="PackedScene" uid="uid://c1j7an8woikyd" path="res://scenes/environment.tscn" id="2_fr3vy"]
+[ext_resource type="Script" uid="uid://cw5iw0tdrx43u" path="res://gameMechanics/guitasktest.gd" id="3_ftq4a"]
 [ext_resource type="PackedScene" uid="uid://5k1o5ctvtah6" path="res://scenes/enemy.tscn" id="3_nule3"]
 [ext_resource type="Script" uid="uid://da4bqfupciool" path="res://controllers/reticle.gd" id="4_0ddhe"]
 [ext_resource type="Theme" uid="uid://de2nek577lf7m" path="res://controllers/Themes/UI/Debug.tres" id="5_lwfgy"]
@@ -9,6 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://dskxen8j6183q" path="res://controllers/materials/Ammo Counter Label Settings.tres" id="7_ftq4a"]
 [ext_resource type="LabelSettings" uid="uid://ymbpk3yphr8i" path="res://controllers/materials/InteractionLabelSettings.tres" id="8_8b5ia"]
 [ext_resource type="PackedScene" uid="uid://dyf8bobfk30yv" path="res://scenes/Item pedestal.tscn" id="9_lwfgy"]
+[ext_resource type="Theme" uid="uid://b4n6esmn2elnd" path="res://controllers/Themes/PauseMenuTheme.tres" id="10_r1245"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u5pdl"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -23,17 +25,13 @@ sky = SubResource("Sky_w2qqb")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="GDScript" id="GDScript_lwfgy"]
-script/source = "extends Node3D
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwfgy"]
+albedo_color = Color(0.74138474, 0.7413847, 0.74138457, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r1245"]
+albedo_color = Color(0.06863427, 0.015218134, 0, 1)
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+[sub_resource type="BoxShape3D" id="BoxShape3D_ftq4a"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_rmptm"]
 vertices = PackedVector3Array(-29.25, 2.5, -25, -27, 2.5, -25, -27, 2.5, -26.25, -29.25, 2.5, -25, -27, 2.5, -26.25, -26.25, 2.5, -27, -29.25, 2.5, -29.25, -23.75, 2.5, -27, -23, 2.5, -26.25, -6.5, 2.5, -29.25, -29.25, 2.5, -29.25, -26.25, 2.5, -27, -23.75, 2.5, -27, -6.5, 2.5, -29.25, -23, 2.5, -26.25, -23, 2.5, -24, -20.25, 2.5, -20.25, -6.75, 2.25, -18.5, -6.5, 2.25, -18.75, -6.5, 2.5, -29.25, -5.75, 2.5, -18.75, -5.75, 2.5, -10.5, -4.5, 2.5, -10.5, -4.5, 2.5, -18.75, -5.75, 2.5, -18.75, -4.5, 2.5, -18.75, -3.75, 2.5, -29.25, -6.5, 2.5, -29.25, -4.5, 2.5, -18.75, -3.75, 2.25, -18.75, -3.75, 2.5, -29.25, -6.5, 2.5, -29.25, -6.5, 2.25, -18.75, -5.75, 2.5, -18.75, -3.75, 2.25, -18.75, -3.5, 1.75, -17, 3.25, 1.75, -17, 3.5, 2.25, -18.75, 3.5, 2.5, -29.25, -3.75, 2.5, -29.25, 4.25, 2.5, -18.75, 4.25, 2.5, -10.5, 5.5, 2.5, -10.5, 5.5, 2.5, -18.75, 4.25, 2.5, -18.75, 5.5, 2.5, -18.75, 6.25, 2.5, -29.25, 3.5, 2.5, -29.25, 5.5, 2.5, -18.75, 6.25, 2.25, -18.75, 6.25, 2.5, -29.25, 3.5, 2.5, -29.25, 3.5, 2.25, -18.75, 4.25, 2.5, -18.75, 23.75, 2.5, -27, 25, 2.5, -27, 25, 2.5, -29.25, 23, 2.5, -26.25, 23.75, 2.5, -27, 25, 2.5, -29.25, 6.25, 2.5, -29.25, 20, 2.5, -19.5, 23, 2.5, -24, 23, 2.5, -26.25, 6.25, 2.5, -29.25, 6.25, 2.25, -18.75, 6.5, 2.25, -18.5, 25, 2.5, -29.25, 25, 2.5, -27, 26.25, 2.5, -27, 25, 2.5, -29.25, 26.25, 2.5, -27, 27, 2.5, -26.25, 29.5, 2.5, -29.25, 27, 2.5, -23.75, 26.25, 2.5, -23, 29.5, 2.5, -7.25, 23.75, 2.5, -23, 23, 2.5, -24, 20, 2.5, -19.5, 29.5, 2.5, -29.25, 27, 2.5, -26.25, 27, 2.5, -23.75, 29.5, 2.5, -7.25, 26.25, 2.5, -23, 23.75, 2.5, -23, 20, 2.5, -19.5, 18.75, 2.25, -7.25, 29.5, 2.5, -7.25, -26, 6.25, -25.75, -25.75, 6.25, -24, -24, 6.25, -24.25, -24.25, 6.25, -26, 24, 6.5, -25.75, 24.25, 6.5, -24, 26, 6.5, -24.25, 25.75, 6.5, -26, -25.75, 2.5, -25.5, -25.5, 2.5, -24.25, -24.25, 2.5, -24.5, -24.5, 2.5, -25.75, 24.25, 2.5, -25.5, 24.5, 2.5, -24.25, 25.75, 2.5, -24.5, 25.5, 2.5, -25.75, -27, 2.5, -23.75, -27, 2.5, -25, -29.25, 2.5, -25, -26.25, 2.5, -23, -27, 2.5, -23.75, -29.25, 2.5, -25, -29.25, 2.5, -6.5, -20.25, 2.5, -20.25, -23, 2.5, -24, -23.75, 2.5, -23, -20.25, 2.5, -20.25, -23.75, 2.5, -23, -26.25, 2.5, -23, -29.25, 2.5, -6.5, -18.75, 2.25, -6.5, -18.5, 2.25, -6.75, -9.5, 0.5, -5, -7.25, 0.5, -5, -7, 0.5, -6.25, -9.75, 0.5, -6.75, -18.5, 2.25, -6.75, -9.75, 0.5, -6.75, -6.75, 0.5, -9.75, -6.75, 2.25, -18.5, -20.25, 2.5, -20.25, -13.5197, 1, -13.5223, -6.25, 0.5, -7, -5, 0.5, -7.25, -5, 0.5, -9.5, -6.75, 0.5, -9.75, -9.75, 0.5, -6.75, -7, 0.5, -6.25, -6.25, 0.5, -7, -6.75, 0.5, -9.75, 7, 0.5, -6.25, 7, 0.5, -5, 9.25, 0.5, -5.25, 7, 0.5, -6.25, 9.25, 0.5, -5.25, 9.5, 0.5, -6.75, 6.5, 0.5, -9.75, 6.25, 0.5, -7, 5, 0.5, -9.5, 5, 0.5, -7.25, 6.25, 0.5, -7, 6.5, 0.5, -9.75, 9.5, 0.5, -6.75, 18.5, 2.25, -6.75, 18.75, 2.25, -7.25, 20, 2.5, -19.5, 6.5, 2.25, -18.5, 6.5, 0.5, -9.75, 12.0153, 1, -13.5113, 10.4905, 0.5, -10.4965, -3.5, 0.75, -11.5, 3.25, 0.75, -11.5, 3.25, 1.75, -17, -3.5, 1.75, -17, -5.5, 0.75, -11.75, -5.5, 0.5, -10.75, -4.75, 0.5, -10.75, -4.75, 0.75, -11.75, -5, 0.5, -9.5, -5, 0.5, -7.25, -3.75, 0.5, -7, -3.5, 0.5, -9.75, -3, 0.5, -6.25, -3, 0.5, -5, 2.75, 0.5, -5, 3.75, 0.5, -7, 5, 0.5, -7.25, 5, 0.5, -9.5, 3.25, 0.5, -9.75, -3.5, 0.75, -11.5, -3.5, 0.5, -9.75, -3, 0.5, -6.25, 2.75, 0.5, -5, 3.25, 0.5, -9.75, 3.25, 0.75, -11.5, 3, 0.5, -6.25, 3.75, 0.5, -7, 3.25, 0.5, -9.75, -3.5, 0.5, -9.75, -3.75, 0.5, -7, -3, 0.5, -6.25, 2.75, 0.5, -5, 3, 0.5, -6.25, 3.25, 0.5, -9.75, 4.5, 0.75, -11.75, 4.5, 0.5, -10.75, 5.25, 0.5, -10.75, 5.25, 0.75, -11.75, 18.75, 2.25, -7.25, 18.5, 2.25, -6.75, 18.75, 2.5, -5.75, 29.5, 2.5, -7.25, 18.75, 2.5, -5.75, 10.25, 2.5, -5.75, 10.25, 2.5, -4.5, 18.75, 2.5, -4.5, 18.75, 2.5, -5.75, 18.75, 2.5, -4.5, 29.5, 2.5, -3, 29.5, 2.5, -7.25, 18.75, 2.5, -4.5, 18.5, 2.25, -3.5, 29.5, 2.5, -3, -18.75, 2.5, -4.5, -10.5, 2.5, -4.5, -10.5, 2.5, -5.75, -18.75, 2.5, -5.75, -29.25, 2.5, -3.75, -18.75, 2.5, -4.5, -18.75, 2.5, -5.75, -29.25, 2.5, -6.5, -29.25, 2.5, -3.75, -18.75, 2.25, -3.75, -18.75, 2.5, -4.5, -18.75, 2.5, -5.75, -18.75, 2.25, -6.5, -29.25, 2.5, -6.5, -6, 4.25, -5.75, -5.75, 4.25, -4, -4, 4.25, -4.25, -4.25, 4.25, -6, 4, 4.5, -5.75, 4.25, 4.5, -4, 6, 4.5, -4.25, 5.75, 4.5, -6, -5.75, 0.5, -5.5, -5.5, 0.5, -4.25, -4.25, 0.5, -4.5, -4.5, 0.5, -5.75, 4.25, 0.5, -5.5, 4.5, 0.5, -4.25, 5.75, 0.5, -4.5, 5.5, 0.5, -5.75, -11.75, 0.75, -5.5, -11.75, 0.75, -4.75, -10.75, 0.5, -4.75, -10.75, 0.5, -5.5, 10.5, 0.5, -5.5, 10.5, 0.5, -4.75, 11.75, 0.75, -4.75, 11.75, 0.75, -5.5, 7, 0.5, 3.75, 7, 0.5, 5, 9.25, 0.5, 5, 9.5, 0.5, 3.25, 11.25, 0.75, -3.5, 9.5, 0.5, -3.5, 6.25, 0.5, -3, 5, 0.5, 2.75, 9.5, 0.5, 3.25, 11.25, 0.75, 3.25, 9.25, 0.5, -5.25, 7, 0.5, -5, 7, 0.5, -3.75, 9.5, 0.5, -3.5, 6.25, 0.5, -3, 5, 0.5, -3, 5, 0.5, 2.75, 6.25, 0.5, 3, 7, 0.5, 3.75, 9.5, 0.5, 3.25, 9.5, 0.5, -3.5, 7, 0.5, -3.75, 6.25, 0.5, -3, 5, 0.5, 2.75, 6.25, 0.5, 3, 9.5, 0.5, 3.25, -9.5, 0.5, 5, -7.25, 0.5, 5, -7, 0.5, 3.75, -9.75, 0.5, 3.25, -5, 0.5, 2.75, -5, 0.5, -3, -6.25, 0.5, -3, -7, 0.5, -3.75, -7.25, 0.5, -5, -9.5, 0.5, -5, -9.75, 0.5, -3.5, -6.25, 0.5, -3, -9.75, 0.5, -3.5, -11.5, 0.75, -3.5, -11.5, 0.75, 3.25, -9.75, 0.5, 3.25, -5, 0.5, 2.75, -9.75, 0.5, 3.25, -7, 0.5, 3.75, -6.25, 0.5, 3, -6.25, 0.5, -3, -7, 0.5, -3.75, -9.75, 0.5, -3.5, -9.75, 0.5, 3.25, -6.25, 0.5, 3, -5, 0.5, 2.75, -3, 0.5, 3.75, -3, 0.5, 5, 2.75, 0.5, 5, 3, 0.5, 3.75, 5, 0.5, 2.75, 5, 0.5, -3, 3.75, 0.5, -3, 3.75, 0.5, 3, 2.75, 0.5, -5, -3, 0.5, -5, -3, 0.5, -3.75, 3, 0.5, -3.75, -3.75, 0.5, -3, -5, 0.5, -3, -5, 0.5, 2.75, 3.75, 0.5, -3, 3, 0.5, -3.75, -3, 0.5, -3.75, 3.75, 0.5, -3, -3, 0.5, -3.75, -3.75, 0.5, 3, -3, 0.5, 3.75, 3, 0.5, 3.75, 3.75, 0.5, 3, -3.75, 0.5, -3, -5, 0.5, 2.75, -3.75, 0.5, 3, -3, 0.5, -3.75, -18.75, 2.25, 3.5, -17, 1.75, 3.25, -17, 1.75, -3.5, -18.75, 2.25, -3.75, -29.25, 2.5, -3.75, -29.25, 2.5, 3.5, -17, 1.75, 3.25, -11.5, 0.75, 3.25, -11.5, 0.75, -3.5, -17, 1.75, -3.5, 11.25, 0.75, 3.25, 17, 1.75, 3.25, 17, 1.75, -3.5, 11.25, 0.75, -3.5, 18.5, 2.25, -3.5, 17, 1.75, -3.5, 17, 1.75, 3.25, 18.5, 2.25, 3.25, 29.5, 2.5, 2.75, 29.5, 2.5, -3, 18.75, 2.5, 5.5, 18.5, 2.25, 6.5, 18.75, 2.25, 7, 29.5, 2.5, 7, 18.75, 2.5, 4.25, 10.25, 2.5, 4.25, 10.25, 2.5, 5.5, 18.75, 2.5, 5.5, 18.75, 2.5, 4.25, 18.75, 2.5, 5.5, 29.5, 2.5, 7, 29.5, 2.5, 2.75, 29.5, 2.5, 2.75, 18.5, 2.25, 3.25, 18.75, 2.5, 4.25, -18.75, 2.5, 5.5, -10.5, 2.5, 5.5, -10.5, 2.5, 4.25, -18.75, 2.5, 4.25, -29.25, 2.5, 6.25, -18.75, 2.5, 5.5, -18.75, 2.5, 4.25, -29.25, 2.5, 3.5, -29.25, 2.5, 6.25, -18.75, 2.25, 6.25, -18.75, 2.5, 5.5, -18.75, 2.5, 4.25, -18.75, 2.25, 3.5, -29.25, 2.5, 3.5, -6, 4.25, 4.25, -5.75, 4.25, 6, -4, 4.25, 5.75, -4.25, 4.25, 4, 4, 4.25, 4.25, 4.25, 4.25, 6, 6, 4.25, 5.75, 5.75, 4.25, 4, -5.75, 0.5, 4.5, -5.5, 0.5, 5.75, -4.25, 0.5, 5.5, -4.5, 0.5, 4.25, 4.25, 0.5, 4.5, 4.5, 0.5, 5.75, 5.75, 0.5, 5.5, 5.5, 0.5, 4.25, -11.75, 0.75, 4.5, -11.75, 0.75, 5.25, -10.75, 0.5, 5.25, -10.75, 0.5, 4.5, 10.5, 0.5, 4.5, 10.5, 0.5, 5.25, 11.75, 0.75, 5.25, 11.75, 0.75, 4.5, -5.25, 0.5, 9.25, -5, 0.5, 7, -6.25, 0.5, 7, -6.75, 0.5, 9.5, -5.25, 0.5, 9.25, -6.25, 0.5, 7, -7, 0.5, 6.25, -9.75, 0.5, 6.5, -7, 0.5, 6.25, -7.25, 0.5, 5, -9.5, 0.5, 5, -9.75, 0.5, 6.5, -6.75, 0.5, 9.5, -9.75, 0.5, 6.5, -18.5, 2.25, 6.5, -19.5, 2.5, 20.25, -6.75, 2.25, 18.5, -11.9897, 0.75, 12.0057, 5, 0.5, 9.25, 5, 0.5, 7, 3.75, 0.5, 7, 3.25, 0.5, 9.5, -3, 0.5, 6.25, -3.5, 0.5, 9.5, -3.5, 0.75, 11.25, 3.25, 0.75, 11.25, 3.25, 0.5, 9.5, 2.75, 0.5, 5, -3.75, 0.5, 7, -5, 0.5, 7, -5.25, 0.5, 9.25, -3.5, 0.5, 9.5, 2.75, 0.5, 5, -3, 0.5, 5, -3, 0.5, 6.25, 3.25, 0.5, 9.5, 3.75, 0.5, 7, 3, 0.5, 6.25, -3, 0.5, 6.25, -3.75, 0.5, 7, -3.5, 0.5, 9.5, 3.25, 0.5, 9.5, 3, 0.5, 6.25, 2.75, 0.5, 5, 9.25, 0.5, 5, 7, 0.5, 5, 7, 0.5, 6.25, 9.5, 0.5, 6.5, 18.75, 2.25, 7, 18.5, 2.25, 6.5, 9.5, 0.5, 6.5, 6.5, 0.5, 9.5, 6.5, 2.25, 18.5, 19.5, 2.25, 19.5, 11.9803, 0.75, 11.9777, 6.25, 0.5, 7, 5, 0.5, 7, 5, 0.5, 9.25, 6.5, 0.5, 9.5, 9.5, 0.5, 6.5, 7, 0.5, 6.25, 6.25, 0.5, 7, 6.5, 0.5, 9.5, -25, 2.5, 29.25, -25, 2.5, 27.25, -26.25, 2.5, 27, -25, 2.5, 29.25, -26.25, 2.5, 27, -27, 2.5, 26.25, -29.25, 2.5, 29.25, -27, 2.5, 23.75, -25.5, 2.5, 22.75, -29.25, 2.5, 6.25, -29.25, 2.5, 29.25, -27, 2.5, 26.25, -27, 2.5, 23.75, -29.25, 2.5, 6.25, -25.5, 2.5, 22.75, -24, 2.5, 23, -19.5, 2.5, 20.25, -18.5, 2.25, 6.5, -18.75, 2.25, 6.25, -29.25, 2.5, 6.25, 26.25, 2.5, 27, 25, 2.5, 27, 25, 2.5, 29.25, 27, 2.5, 26.25, 26.25, 2.5, 27, 25, 2.5, 29.25, 29.5, 2.5, 29.25, 26.25, 2.5, 23, 27.25, 2.5, 24.5, 29.5, 2.5, 7, 27.25, 2.5, 24.5, 27, 2.5, 26.25, 29.5, 2.5, 29.25, 19.5, 2.25, 19.5, 24, 2.5, 23, 26.25, 2.5, 23, 29.5, 2.5, 7, 18.75, 2.25, 7, 27.25, 2.5, 24.5, 29.5, 2.5, 29.25, 29.5, 2.5, 7, -4.5, 2.5, 18.75, -4.5, 2.5, 10.25, -5.75, 2.5, 10.25, -5.75, 2.5, 18.75, -6.5, 2.5, 29.25, -3.75, 2.5, 29.25, -4.5, 2.5, 18.75, -5.75, 2.5, 18.75, -3.75, 2.5, 29.25, -3.75, 2.25, 18.75, -4.5, 2.5, 18.75, -5.75, 2.5, 18.75, -6.5, 2.25, 18.75, -6.5, 2.5, 29.25, 5.5, 2.5, 18.75, 5.5, 2.5, 10.25, 4.25, 2.5, 10.25, 4.25, 2.5, 18.75, 3.5, 2.5, 29.25, 6.25, 2.5, 29.25, 5.5, 2.5, 18.75, 4.25, 2.5, 18.75, 6.25, 2.5, 29.25, 6.25, 2.25, 18.75, 5.5, 2.5, 18.75, 4.25, 2.5, 18.75, 3.5, 2.25, 18.75, 3.5, 2.5, 29.25, -5.5, 0.5, 10.5, -5.5, 0.75, 11.75, -4.75, 0.75, 11.75, -4.75, 0.5, 10.5, 4.5, 0.5, 10.5, 4.5, 0.75, 11.75, 5.25, 0.75, 11.75, 5.25, 0.5, 10.5, -3.5, 1.75, 17, 3.25, 1.75, 17, 3.25, 0.75, 11.25, -3.5, 0.75, 11.25, 3.5, 2.25, 18.75, 3.25, 1.75, 17, -3.5, 1.75, 17, -3.75, 2.25, 18.75, -3.75, 2.5, 29.25, 3.5, 2.5, 29.25, -23.75, 2.5, 27, -25, 2.5, 27.25, -25, 2.5, 29.25, -23, 2.5, 26.25, -23.75, 2.5, 27, -25, 2.5, 29.25, -6.5, 2.5, 29.25, -19.5, 2.5, 20.25, -24, 2.5, 23, -23, 2.5, 23.75, -19.5, 2.5, 20.25, -23, 2.5, 23.75, -23, 2.5, 26.25, -6.5, 2.5, 29.25, -6.5, 2.25, 18.75, -6.75, 2.25, 18.5, 25, 2.5, 29.25, 25, 2.5, 27, 23.75, 2.5, 27, 25, 2.5, 29.25, 23.75, 2.5, 27, 22.75, 2.5, 25.5, 6.25, 2.5, 29.25, 23, 2.5, 23.75, 24, 2.5, 23, 19.5, 2.25, 19.5, 22.75, 2.5, 25.5, 23, 2.5, 23.75, 19.5, 2.25, 19.5, 6.5, 2.25, 18.5, 6.25, 2.25, 18.75, 6.25, 2.5, 29.25, -26, 6.25, 24.25, -25.75, 6.25, 26, -24, 6.25, 25.75, -24.25, 6.25, 24, 24, 6.25, 24.25, 24.25, 6.25, 26, 26, 6.25, 25.75, 25.75, 6.25, 24, -25.75, 2.5, 24.5, -25.5, 2.5, 25.75, -24.25, 2.5, 25.5, -24.5, 2.5, 24.25, 24.25, 2.5, 24.5, 24.5, 2.5, 25.75, 25.75, 2.5, 25.5, 25.5, 2.5, 24.25)
@@ -54,6 +52,74 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1553380858]
 environment = SubResource("Environment_6knbf")
+
+[node name="InteractableTest" type="CSGBox3D" parent="." unique_id=1913512822]
+transform = Transform3D(0.7496261, 0, -0.66186154, 0, 1, 0, 0.66186154, 0, 0.7496261, 3.0717387, 0.42535555, -4.0354357)
+material = SubResource("StandardMaterial3D_lwfgy")
+
+[node name="box1" type="CSGBox3D" parent="InteractableTest" unique_id=1095838843]
+transform = Transform3D(0.99896884, 0.03652684, 0.02698183, -0.04016888, 0.98789424, 0.14983608, -0.021181762, -0.15076561, 0.9883425, 0.017092466, 0.6663114, -0.18535471)
+size = Vector3(0.991333, 0.51708984, 0.84484863)
+
+[node name="box2" type="CSGBox3D" parent="InteractableTest" unique_id=1519202313]
+transform = Transform3D(0.9999504, 0.0012059435, -0.00995627, -0.0033301376, 0.976345, -0.21619232, 0.009460539, 0.21621434, 0.9762998, 0.0040130615, 0.05216068, 0.15871859)
+size = Vector3(0.991333, 0.923584, 0.84484863)
+
+[node name="box3" type="CSGBox3D" parent="InteractableTest" unique_id=53582541]
+transform = Transform3D(0.99841845, 0.0024832934, 0.056176186, -0.020202108, 0.948165, 0.31713584, -0.052476585, -0.31776893, 0.9467151, 0.014845133, 0.6550026, 0.24667215)
+size = Vector3(0.7612793, 0.48344725, 0.14035645)
+material = SubResource("StandardMaterial3D_r1245")
+
+[node name="Area3D" type="Area3D" parent="InteractableTest" unique_id=2031648996]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableTest/Area3D" unique_id=1640450757]
+shape = SubResource("BoxShape3D_ftq4a")
+
+[node name="GUItasktest" type="Window" parent="." unique_id=830631381]
+unique_name_in_owner = true
+oversampling_override = 1.0
+title = "Minitask test"
+initial_position = 2
+size = Vector2i(900, 500)
+transient = true
+transient_to_focused = true
+exclusive = true
+script = ExtResource("3_ftq4a")
+
+[node name="GUI" type="CanvasLayer" parent="GUItasktest" unique_id=183574257]
+
+[node name="Panel" type="Panel" parent="GUItasktest/GUI" unique_id=923370294]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GUItasktest/GUI/Panel" unique_id=1071161576]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="GUItasktest/GUI/Panel/SubViewportContainer" unique_id=1617212057]
+unique_name_in_owner = true
+handle_input_locally = false
+size = Vector2i(900, 500)
+size_2d_override = Vector2i(1150, 650)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="GUItasktest" unique_id=144988928]
+transform = Transform3D(0.6735674, 0, -0.7391258, 0, 1, 0, 0.7391258, 0, 0.6735674, 1.9815508, 1.2883507, -3.0262659)
+visible = false
+visibility_parent = NodePath("../../InteractableTest")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=781029339]
 
@@ -102,6 +168,12 @@ layout_mode = 2
 placeholder_text = "Enter Address to Join Here"
 alignment = 1
 
+[node name="GUItest" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1440372615]
+visible = false
+layout_mode = 2
+text = "GUI minitask scene test"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1971673780]
 [node name="SpawnPoints2" type="Node3D" parent="." unique_id=863307615]
 
 [node name="Robber" type="Node3D" parent="SpawnPoints2" unique_id=2060114088]
@@ -131,6 +203,7 @@ navigation_mesh = SubResource("NavigationMesh_rmptm")
 [node name="Environment" parent="NavigationRegion3D" unique_id=332111882 instance=ExtResource("2_fr3vy")]
 
 [node name="UserInterface" type="Control" parent="." unique_id=499654013]
+unique_name_in_owner = true
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -300,20 +373,76 @@ size_flags_horizontal = 6
 text = "TestTest"
 label_settings = SubResource("LabelSettings_cdpo3")
 
+[node name="MYidVbox" type="VBoxContainer" parent="UserInterface" unique_id=413844586]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 6.0
+offset_right = 1143.0
+offset_bottom = 77.0
+
+[node name="MyIdLabel" type="Label" parent="UserInterface/MYidVbox" unique_id=1674277987]
+unique_name_in_owner = true
+layout_mode = 2
+text = "aaaawagga"
+
 [node name="ItemPedestal" parent="." unique_id=1849080789 instance=ExtResource("9_lwfgy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.567147, 0.625, -0.56337714)
 
-[node name="Robbers" type="Label3D" parent="." unique_id=1161939699]
-transform = Transform3D(0.16554679, 0, -0.986202, 0, 1, 0, 0.986202, 0, 0.16554679, 29.079456, 4.5562344, 0)
-modulate = Color(1, 0.09803922, 0.3137255, 1)
-text = "Robbers"
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=957366646]
 
-[node name="Cops" type="Label3D" parent="." unique_id=1286298216]
-transform = Transform3D(0.1754527, 0, 0.9844879, 0, 1, 0, -0.9844879, 0, 0.1754527, -29.815443, 5.2155466, 0)
-modulate = Color(0.1254902, 0.6392157, 1, 1)
-text = "Cops"
+[node name="PausePanel" type="Panel" parent="PauseLayer" unique_id=912028623]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -298.0
+offset_top = -215.0
+offset_right = 298.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("10_r1245")
+
+[node name="PauseVbox" type="VBoxContainer" parent="PauseLayer/PausePanel" unique_id=384442870]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.5
+offset_top = -25.0
+offset_right = 48.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="PauseLayer/PausePanel/PauseVbox" unique_id=2115988080]
+layout_mode = 2
+text = "heeheehoo"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="PauseLayer/PausePanel/PauseVbox" unique_id=1246233509]
+layout_mode = 2
+text = "ooheehehee"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PauseLayer/PausePanel/PauseVbox" unique_id=2046067808]
+layout_mode = 2
+text = "Button that does nothing"
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="spawned" from="SpawnPoints" to="." method="_on_multiplayer_spawner_spawned"]
+[connection signal="body_entered" from="InteractableTest/Area3D" to="." method="_GUI_window_open"]
+[connection signal="close_requested" from="GUItasktest" to="GUItasktest" method="_GUI_window_close"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/GUItest" to="." method="_on_guitasktest_pressed"]
+[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]

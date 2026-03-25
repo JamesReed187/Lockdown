@@ -25,6 +25,7 @@ class_name WeaponController
 		if Engine.is_editor_hint():
 			loadWeapon()
 
+
 #********Animation names Index:********
 		# "fullReload"
 		# "emptyReload"
@@ -129,6 +130,7 @@ func switchWeapon(direction: int) -> void:
 	# Equip the weapon at the new index
 	loadWeapon()
 	
+	
 func wrap_index(index: int, size: int) -> int:
 	# Wrap the index to stay within [0, size)
 	if size == 0:
@@ -150,6 +152,7 @@ func loadWeapon():
 			weaponType = load(weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex])
 		else:
 			weaponType = load("res://Weapons/Empty Weapon.tres")
+		
 	
 	#These variables hold all the data from the weapon and are access everywhere
 	#in this script for various core functionality
@@ -220,6 +223,8 @@ func loadWeapon():
 		weaponGlobal.weaponAccuracy = weaponType.Accuracy
 		weaponGlobal.verticalRecoil = weaponType.verticalRecoil
 		weaponGlobal.horizontalRecoil = weaponType.horizontalRecoil
+		Global.rpc("replicateSpecificObject", str(get_path()), "replicateWeaponVisual", weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex])
+		
 		
 
 #Controls the sway of the weapon given the values from the loaded weapon
@@ -298,7 +303,7 @@ func shoot() -> void:
 					if hitBody.has_method("take_enemy_damage"):
 						hitBody.take_enemy_damage(weaponType.Damage, "bullet")
 					elif hitBody.has_method("take_damage"):
-						hitBody.take_damage.rpc_id(hitBody.get_multiplayer_authority(), weaponType.Damage, "bullet")  # Deal damage to the enemy
+						hitBody.take_damage.rpc_id(hitBody.get_multiplayer_authority(), weaponType.Damage, "bullet", Global.myCurrentTeam)  # Deal damage to the enemy
 
 		#If the weapon is a projectile weapon then shoot a projectile not a raycast
 		if weaponGlobal.weaponBulletPhysics == "Projectile":
@@ -445,18 +450,12 @@ func dropWeapon():
 		dropInstance.parseAmmo(currentClip, currentReserve)
 		weaponGlobal.inventoryWeight -= weaponType.weight
 		
-		#This is for a specific weapon, however can be removed or changed
-		if weaponType == load("res://Weapons/Soul Knife.tres"):
-			dropVel = -Global.playerCamera.global_transform.basis.z.normalized() * (Global.player.velocity.length() + 20)
-			dropInstance.changeVel(dropVel)
-		else:
-			#This is the generic drop velocity
-			dropVel = -Global.playerCamera.global_transform.basis.z.normalized() * (Global.player.velocity.length() + 12)
-			dropInstance.changeVel(dropVel)
+		dropVel = -Global.playerCamera.global_transform.basis.z.normalized() * (Global.player.velocity.length() + 12)
+		dropInstance.changeVel(dropVel)
 		
 		#Fall back incase after you drop the weapon is not an empty weapon
 		if weaponType != load("res://Weapons/Empty Weapon.tres"):
-			weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex] = null
+			weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex] = "res://Weapons/Empty Weapon.tres"
 			loadWeapon()
 
 		#Replicates the drop to the other players on the server
@@ -475,8 +474,18 @@ func replicateDroppedWeapon(weapon, clip, reserve, dropPos, dropVel, team):
 	dropInstance.parseAmmo(clip, reserve)
 	dropInstance.changeVel(dropVel)
 
-#This function is for adding ammo to the player, such as a ammo pickup
 
+func replicateWeaponVisual(weaponPath):
+	var replicatedWeapon = load(weaponPath)
+	weaponMesh.mesh = replicatedWeapon.mesh
+	weaponMagazine.mesh = replicatedWeapon.magazine
+	weaponBolt.mesh = replicatedWeapon.bolt
+	weaponShadow.mesh = replicatedWeapon.mesh
+
+
+
+
+#This function is for adding ammo to the player, such as a ammo pickup
 func addAmmo(clipAdd, reserveAdd):
 	#Method of adding ammo
 	var ammoNeeded = weaponGlobal.maxClipAmmo - weaponGlobal.clipAmmo
@@ -492,7 +501,9 @@ func addAmmo(clipAdd, reserveAdd):
 	weaponGlobal.reserveAmmo += reserveAdd
 	Global.clipLabel.text = str(weaponGlobal.clipAmmo)
 	Global.reserveLabel.text = str(weaponGlobal.reserveAmmo)
-	
+
+
+
 #func _physics_process(delta) -> void:
 
 #✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅
