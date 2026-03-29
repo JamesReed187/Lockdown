@@ -202,9 +202,6 @@ navigation_mesh = SubResource("NavigationMesh_rmptm")
 
 [node name="Environment" parent="NavigationRegion3D" unique_id=332111882 instance=ExtResource("2_fr3vy")]
 
-[node name="chatbot" parent="NavigationRegion3D" unique_id=18944203 instance=ExtResource("4_r1245")]
-position = Vector2(-105, 302)
-
 [node name="UserInterface" type="Control" parent="." unique_id=499654013]
 unique_name_in_owner = true
 visible = false
@@ -390,6 +387,10 @@ text = "aaaawagga"
 
 [node name="ItemPedestal" parent="." unique_id=1849080789 instance=ExtResource("9_lwfgy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.567147, 0.625, -0.56337714)
+
+[node name="chatbox" parent="." unique_id=18944203 instance=ExtResource("4_r1245")]
+visible = false
+position = Vector2(-105, 302)
 
 [node name="PauseLayer" type="CanvasLayer" parent="." unique_id=957366646]
 
