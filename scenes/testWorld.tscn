@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://demmf2hbrwaat" path="res://scenes/world.gd" id="1_ctiuy"]
 [ext_resource type="PackedScene" uid="uid://c1j7an8woikyd" path="res://scenes/environment.tscn" id="2_fr3vy"]
+[ext_resource type="AudioStream" uid="uid://dbwy7vdmgmifi" path="res://scenes/starostin-crime-heist-investigation-music-259668.mp3" id="3_8b5ia"]
 [ext_resource type="Script" uid="uid://cw5iw0tdrx43u" path="res://gameMechanics/guitasktest.gd" id="3_ftq4a"]
 [ext_resource type="PackedScene" uid="uid://5k1o5ctvtah6" path="res://scenes/enemy.tscn" id="3_nule3"]
 [ext_resource type="Script" uid="uid://da4bqfupciool" path="res://controllers/reticle.gd" id="4_0ddhe"]
-[ext_resource type="PackedScene" uid="uid://1gk8wgub7vvt" path="res://scenes/chatbox.tscn" id="4_r1245"]
 [ext_resource type="Theme" uid="uid://de2nek577lf7m" path="res://controllers/Themes/UI/Debug.tres" id="5_lwfgy"]
 [ext_resource type="Script" uid="uid://dvspsmhr73myh" path="res://controllers/scripts/debug_panel.gd" id="6_r1245"]
 [ext_resource type="LabelSettings" uid="uid://dskxen8j6183q" path="res://controllers/materials/Ammo Counter Label Settings.tres" id="7_ftq4a"]
@@ -148,7 +148,7 @@ theme_override_constants/separation = 15
 
 [node name="Label" type="Label" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1369319182]
 layout_mode = 2
-text = "Main Menu"
+text = "LOCKDOWN"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -174,6 +174,10 @@ visible = false
 layout_mode = 2
 text = "GUI minitask scene test"
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="CanvasLayer" unique_id=323138804]
+stream = ExtResource("3_8b5ia")
+autoplay = true
+
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1971673780]
 
 [node name="SpawnPoints2" type="Node3D" parent="." unique_id=863307615]
@@ -190,7 +194,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.373262, 2, 0)
 [node name="Marker3D" type="Marker3D" parent="SpawnPoints2/Cops" unique_id=106706201]
 transform = Transform3D(0.2774824, 0, 0.96073073, 0, 1, 0, -0.96073073, 0, 0.2774824, 0, 0, 0)
 
-[node name="SpawnPoints" type="MultiplayerSpawner" parent="." unique_id=41216743]
+[node name="SpawnPoints" type="MultiplayerSpawner" parent="." unique_id=657898112]
 _spawnable_scenes = PackedStringArray("uid://c3ffql15mo0aj")
 spawn_path = NodePath("..")
 
@@ -387,10 +391,6 @@ text = "aaaawagga"
 
 [node name="ItemPedestal" parent="." unique_id=1849080789 instance=ExtResource("9_lwfgy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.567147, 0.625, -0.56337714)
-
-[node name="chatbox" parent="." unique_id=18944203 instance=ExtResource("4_r1245")]
-visible = false
-position = Vector2(-105, 302)
 
 [node name="PauseLayer" type="CanvasLayer" parent="." unique_id=957366646]
 
