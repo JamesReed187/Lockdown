@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://tr2q5pr3ckes" path="res://scenes/chatbox.gd" id="1_q4hop"]
 
-[node name="chatbot" type="Node2D" unique_id=18944203]
+[node name="chatbox" type="Node2D" unique_id=18944203]
 script = ExtResource("1_q4hop")
 
 [node name="Message" type="LineEdit" parent="." unique_id=570877862]
