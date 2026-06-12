@@ -46,7 +46,7 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://MX1 Blaster.res",
+"save_to_file/fallback_path": "res://Weapons/MX1 Blaster.res",
 "save_to_file/path": "uid://drxt2mucuj6fi"
 },
 "Magazine": {
