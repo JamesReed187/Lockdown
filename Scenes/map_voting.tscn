@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://dchl1fmmudexg"]
+
+[ext_resource type="Script" uid="uid://c5gi2u6lgcast" path="res://Scenes/map_voting.gd" id="1_y4up4"]
+[ext_resource type="Texture2D" uid="uid://ccrubxjvu6xje" path="res://Textures/Map 1.png" id="2_85yjf"]
+[ext_resource type="Texture2D" uid="uid://dupjgreo64kyv" path="res://Textures/Map 2.png" id="3_f67in"]
+
+[node name="Map Voting" type="Node2D" unique_id=1643122257]
+script = ExtResource("1_y4up4")
+
+[node name="Map Voting text" type="TextEdit" parent="." unique_id=356112016]
+offset_left = 530.0
+offset_top = 122.0
+offset_right = 631.0
+offset_bottom = 164.0
+text = "Map Voting"
+
+[node name="map 1" type="TextEdit" parent="." unique_id=1495726542]
+offset_left = 216.0
+offset_top = 536.0
+offset_right = 572.0
+offset_bottom = 567.0
+text = "                                    Map 1"
+
+[node name="vote map 1" type="Button" parent="map 1" unique_id=1711066732]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 33.0
+offset_right = 262.074
+offset_bottom = 68.0
+text = "Vote"
+
+[node name="Map1" type="Sprite2D" parent="map 1" unique_id=393089675]
+position = Vector2(179, -187.99994)
+scale = Vector2(0.2700893, 0.5412371)
+texture = ExtResource("2_85yjf")
+
+[node name="map2" type="TextEdit" parent="." unique_id=328324381]
+offset_left = 580.0
+offset_top = 535.0
+offset_right = 935.0
+offset_bottom = 567.0
+text = "                                   Map 2"
+
+[node name="vote map 2" type="Button" parent="map2" unique_id=1709666213]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 33.0
+offset_right = 262.07397
+offset_bottom = 68.0
+text = "Vote"
+
+[node name="Map2" type="Sprite2D" parent="map2" unique_id=167503528]
+position = Vector2(182, -187)
+scale = Vector2(0.27, 0.5419736)
+texture = ExtResource("3_f67in")
