@@ -13,6 +13,7 @@ offset_top = 122.0
 offset_right = 631.0
 offset_bottom = 164.0
 text = "Map Voting"
+editable = false
 
 [node name="map 1" type="TextEdit" parent="." unique_id=1495726542]
 offset_left = 216.0
@@ -20,6 +21,7 @@ offset_top = 536.0
 offset_right = 572.0
 offset_bottom = 567.0
 text = "                                    Map 1"
+editable = false
 
 [node name="vote map 1" type="Button" parent="map 1" unique_id=1711066732]
 layout_mode = 0
@@ -40,6 +42,7 @@ offset_top = 535.0
 offset_right = 935.0
 offset_bottom = 567.0
 text = "                                   Map 2"
+editable = false
 
 [node name="vote map 2" type="Button" parent="map2" unique_id=1709666213]
 layout_mode = 0
