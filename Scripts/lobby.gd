@@ -329,39 +329,6 @@ func _physics_process(delta):
 
 		pause()
 
-
-
-func _ready() -> void:
-
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-	Global.reserveLabel = %Reserve
-	Global.interactionLabel = %InteractionLabel
-	Global.clipLabel = %Clip
-	Global.pointsLabel = %TotalValue
-	Global.healthLabel = %Health
-
-	Global.totalValue = 0
-
-	GUI.hide()
-
-	if Global.isMainMenu == false:
-
-		main_menu.hide()
-		hud.show()
-
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-	print(Input.get_joy_name(0))
-
-	get_viewport().set_embedding_subwindows(false)
-
-	Global.recreatePlayers()
-
-	Global.respawnPlayers(cop_spawns, robber_spawns)
-
-
-
 func _unhandled_input(_event):
 
 	if Input.is_action_just_pressed("quit"):

@@ -11,6 +11,8 @@ albedo_color = Color(0, 1, 1, 1)
 material = SubResource("StandardMaterial3D_i87kb")
 flip_faces = true
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4g4tt"]
+
 [node name="DeathCube" type="Node3D" unique_id=145201229]
 script = ExtResource("1_4g4tt")
 
@@ -23,5 +25,9 @@ shape = SubResource("BoxShape3D_u72bo")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=7468992]
 transform = Transform3D(1.1702365, 0, 0, 0, 1.1702365, 0, 0, 0, 1.1702365, 0, 0, 0)
 mesh = SubResource("BoxMesh_7aftq")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=180370494]
+root_path = NodePath("../MeshInstance3D")
+replication_config = SubResource("SceneReplicationConfig_4g4tt")
 
 [connection signal="body_entered" from="DeathCubeArea" to="." method="_on_death_cube_area_body_entered"]

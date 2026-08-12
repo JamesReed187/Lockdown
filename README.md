@@ -1,3 +1,3 @@
 # Lockdown
 
-This is a multiple FPS project being developed in class in 2026. Built in Godot 4.6
+A party FPS game developed by the lockdown team in 2026. Built using Godot 4.6

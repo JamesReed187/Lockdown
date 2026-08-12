@@ -112,5 +112,13 @@ func exitTrapSetup():
 		Global.respawnPlayers()
 
 func resetRound():
-	Global.roundReset.emit()
-	Global.respawnPlayers()
+	if get_tree().get_network_unique_id() == 1:
+		Global.roundReset.emit()
+		Global.respawnPlayers()
+		rpc("recieveReset")
+
+@rpc("reliable")
+func recieveReset():
+	if get_tree().get_network_unique_id() != 1:
+		Global.roundReset.emit()
+		Global.respawnPlayers()

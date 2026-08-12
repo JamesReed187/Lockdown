@@ -10,7 +10,6 @@ extends PlayerMovementState
 func enter(previous_state) -> void:
 	PLAYER.velocity += -Camera.global_transform.basis.z.normalized() * speed
 	PLAYER.stamina -= 33
-	print(-Camera.global_transform.basis.z.normalized() * speed)
 
 func exit() -> void:
 	pass
