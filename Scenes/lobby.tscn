@@ -178,7 +178,6 @@ stream = ExtResource("3_8b5ia")
 autoplay = true
 
 [node name="Loading" type="Label" parent="CanvasLayer" unique_id=2091700247]
-visible = false
 anchors_preset = -1
 anchor_right = 0.24000001
 anchor_bottom = 0.23600002

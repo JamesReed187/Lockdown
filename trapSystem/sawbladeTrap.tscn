@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://ha8gav5g5u7l"]
+
+[ext_resource type="ArrayMesh" uid="uid://bkwju4upueaov" path="res://Models/traps/sawblade/sawbladeMesh_sawblade.res" id="1_0ymjq"]
+[ext_resource type="ArrayMesh" uid="uid://dahy7n6wbfy7g" path="res://Models/traps/sawblade/sawbladeMesh_sawbladeBase.res" id="2_ckddn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xpc2p"]
+size = Vector3(2.5, 2.5, 0.25)
+
+[sub_resource type="Animation" id="Animation_060vf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Blade:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_me4y1"]
+resource_name = "sawbladeDown"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Blade:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -1.6, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_o5om2"]
+resource_name = "sawbladeUp"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Blade:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -1.6, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_82iak"]
+_data = {
+&"RESET": SubResource("Animation_060vf"),
+&"sawbladeDown": SubResource("Animation_me4y1"),
+&"sawbladeUp": SubResource("Animation_o5om2")
+}
+
+[node name="SawbladeTrap" type="Node3D" unique_id=1923715929]
+
+[node name="Blade" type="MeshInstance3D" parent="." unique_id=1613625338]
+transform = Transform3D(1, -4.371139e-08, -4.371139e-08, 4.371139e-08, -4.371139e-08, 1, -4.371139e-08, -1, -4.3711385e-08, 0, 0, 0)
+mesh = ExtResource("1_0ymjq")
+
+[node name="HurtArea" type="Area3D" parent="Blade" unique_id=1815745174]
+transform = Transform3D(1, 4.3711385e-08, -4.3711392e-08, -4.3711385e-08, -4.371139e-08, -1, -4.3711392e-08, 1, -4.3711385e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blade/HurtArea" unique_id=328805015]
+shape = SubResource("BoxShape3D_xpc2p")
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=1780070740]
+mesh = ExtResource("2_ckddn")
+
+[node name="Timer" type="Timer" parent="." unique_id=1117717658]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=951122338]
+libraries/ = SubResource("AnimationLibrary_82iak")
