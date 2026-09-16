@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dd8ov1iyaklk5" path="res://controllers/scripts/State Machine/idle_player_state.gd" id="7_gshig"]
 [ext_resource type="Script" uid="uid://dv2uyfesuk4fh" path="res://controllers/scripts/State Machine/walking_player_state.gd" id="8_jmoha"]
 [ext_resource type="Script" uid="uid://7oev0hm280x0" path="res://controllers/scripts/State Machine/spriting_player_state.gd" id="9_bneyr"]
+[ext_resource type="Shader" uid="uid://8mf418acms3f" path="res://Shaders/damageVignette.gdshader" id="9_h7h5r"]
 [ext_resource type="Script" uid="uid://c7o2fiahsh0tl" path="res://controllers/scripts/State Machine/crouching_player_state.gd" id="10_jdr2h"]
 [ext_resource type="Script" uid="uid://cednwk8gblcux" path="res://controllers/scripts/State Machine/sliding_player_state.gd" id="11_rk4xh"]
 [ext_resource type="Script" uid="uid://bttldsvuv6dwb" path="res://controllers/scripts/State Machine/jumping_player_state.gd" id="12_uovkr"]
@@ -465,6 +466,11 @@ _data = {
 &"fullReload": SubResource("Animation_hu1sj"),
 &"shoot": SubResource("Animation_yxeyi")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xpc2p"]
+shader = ExtResource("9_h7h5r")
+shader_parameter/vignette_color = Color(1, 0, 0, 1)
+shader_parameter/intensity = 0.0
 
 [sub_resource type="Animation" id="Animation_xc2pf"]
 length = 0.001
@@ -966,6 +972,17 @@ script = ExtResource("4_tg6sc")
 [node name="Bullet Spawn" type="Node3D" parent="CameraController/Camera3D" unique_id=510310095]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="CameraController/Camera3D" unique_id=665682163]
+
+[node name="damageVignette" type="ColorRect" parent="CameraController/Camera3D/CanvasLayer" unique_id=50357358]
+material = SubResource("ShaderMaterial_xpc2p")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1984545451]
 libraries/ = SubResource("AnimationLibrary_t6fw5")

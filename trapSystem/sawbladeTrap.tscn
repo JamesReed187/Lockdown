@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://ha8gav5g5u7l"]
 
-[ext_resource type="ArrayMesh" uid="uid://bkwju4upueaov" path="res://Models/traps/sawblade/sawbladeMesh_sawblade.res" id="1_0ymjq"]
-[ext_resource type="ArrayMesh" uid="uid://dahy7n6wbfy7g" path="res://Models/traps/sawblade/sawbladeMesh_sawbladeBase.res" id="2_ckddn"]
+[ext_resource type="ArrayMesh" uid="uid://dcnv0bi2o8ark" path="res://Models/traps/sawblade/sawbladeMesh_sawblade.res" id="1_0ymjq"]
+[ext_resource type="Script" uid="uid://cv1og3r3yrdwb" path="res://trapSystem/traps/sawbladeTrap.gd" id="1_ckddn"]
+[ext_resource type="ArrayMesh" uid="uid://f1vp455bi143" path="res://Models/traps/sawblade/sawbladeMesh_sawbladeBase.res" id="2_ckddn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xpc2p"]
-size = Vector3(2.5, 2.5, 0.25)
+size = Vector3(1.75, 1.75, 0.25)
 
 [sub_resource type="Animation" id="Animation_060vf"]
 length = 0.001
@@ -60,10 +61,15 @@ _data = {
 &"sawbladeUp": SubResource("Animation_o5om2")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_eqax0"]
+size = Vector3(3.995, 2, 1)
+
 [node name="SawbladeTrap" type="Node3D" unique_id=1923715929]
+script = ExtResource("1_ckddn")
 
 [node name="Blade" type="MeshInstance3D" parent="." unique_id=1613625338]
-transform = Transform3D(1, -4.371139e-08, -4.371139e-08, 4.371139e-08, -4.371139e-08, 1, -4.371139e-08, -1, -4.3711385e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 4.3711385e-08, -4.3711385e-08, -4.371139e-08, 1, 1.9106853e-15, -1, -4.371139e-08, 0, 0, 0)
+rotation_order = 0
 mesh = ExtResource("1_0ymjq")
 
 [node name="HurtArea" type="Area3D" parent="Blade" unique_id=1815745174]
@@ -72,10 +78,25 @@ transform = Transform3D(1, 4.3711385e-08, -4.3711392e-08, -4.3711385e-08, -4.371
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Blade/HurtArea" unique_id=328805015]
 shape = SubResource("BoxShape3D_xpc2p")
 
-[node name="Base" type="MeshInstance3D" parent="." unique_id=1780070740]
-mesh = ExtResource("2_ckddn")
-
 [node name="Timer" type="Timer" parent="." unique_id=1117717658]
+wait_time = 4.0
+autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=951122338]
 libraries/ = SubResource("AnimationLibrary_82iak")
+
+[node name="damageTimer" type="Timer" parent="." unique_id=1258018613]
+wait_time = 0.25
+autostart = true
+
+[node name="Base" type="StaticBody3D" parent="." unique_id=620153568]
+
+[node name="BaseMesh" type="MeshInstance3D" parent="Base" unique_id=1780070740]
+mesh = ExtResource("2_ckddn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base" unique_id=1443853967]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.4000001, 0)
+shape = SubResource("BoxShape3D_eqax0")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="damageTimer" to="." method="_on_damage_timer_timeout"]

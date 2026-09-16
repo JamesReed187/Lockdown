@@ -16,6 +16,7 @@ extends CharacterBody3D
 @onready var stateMachine = $PlayerStateMachine
 @onready var copModel = $"CollisionShape3D/Cop model"
 @onready var robberModel = $"CollisionShape3D/Robber model"
+@onready var damageVignette = $CameraController/Camera3D/CanvasLayer/damageVignette
 
 var _mouse_input : bool = false
 var _rotation_input : float
@@ -54,7 +55,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	CROUCH_SHAPECAST.add_exception(self)
-	Global.isMainMenu = false  
+	Global.isMainMenu = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -131,6 +132,7 @@ func _physics_process(delta):
 		#velocity.y -= gravity * delta
 	CAMERA_CONTROLLER.rotation = lerp(CAMERA_CONTROLLER.rotation, CAMERA_CONTROLLER.rotation + cameraOffset, 0.1)
 	cameraOffset = lerp(cameraOffset, Vector3(0,0,0), 0.05)
+	damageVignette.material.set_shader_parameter("intensity", move_toward(damageVignette.material.get_shader_parameter("intensity"), 0.0, 0.01))  
 
 
 	if _mouse_input:
@@ -194,11 +196,14 @@ func take_damage(damage, type, team):
 	if team != Global.myCurrentTeam:
 
 		Global.playerHealth -= damage
+		damageVignette.material.set_shader_parameter("intensity", damageVignette.material.get_shader_parameter("intensity") + 0.25)
+		damageVignette.material.set_shader_parameter("intensity", clampf(damageVignette.material.get_shader_parameter("intensity"), 0.0, 0.75))  
 		Global.updateHealth()
 
 		if Global.playerHealth <= 0:
 			Global.playerHealth = 100
 			position.z += 100
+			damageVignette.material.set_shader_parameter("intensity", 1.0)
 			if multiplayer.get_unique_id() != 1:
 				get_node("/root/World").updateAlivePlayers.rpc(Global.myCurrentTeam)
 				#Global.rpc("replicateSpecificObject", str(get_tree().current_scene.get_path()), "updateAlivePlayers", Global.myCurrentTeam)

@@ -25,6 +25,7 @@ var healthLabel: Label
 var interactionLabel: Label
 var isPaused = false
 var myCurrentTeam : String
+#"Robber" or "Cop"
 
 var totalValue = 0
 

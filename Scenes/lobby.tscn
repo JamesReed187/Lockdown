@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://da4bqfupciool" path="res://controllers/reticle.gd" id="4_0ddhe"]
 [ext_resource type="Texture2D" uid="uid://c8wkg88dvxlhj" path="res://Textures/1_kNm9rtz-Ud5jmP9qGynmog.webp" id="4_0roqs"]
 [ext_resource type="Theme" uid="uid://de2nek577lf7m" path="res://controllers/Themes/UI/Debug.tres" id="5_lwfgy"]
+[ext_resource type="PackedScene" uid="uid://ha8gav5g5u7l" path="res://trapSystem/sawbladeTrap.tscn" id="6_0f3vc"]
 [ext_resource type="Script" uid="uid://dvspsmhr73myh" path="res://controllers/scripts/debug_panel.gd" id="6_r1245"]
 [ext_resource type="LabelSettings" uid="uid://dskxen8j6183q" path="res://controllers/materials/Ammo Counter Label Settings.tres" id="7_ftq4a"]
 [ext_resource type="LabelSettings" uid="uid://ymbpk3yphr8i" path="res://controllers/materials/InteractionLabelSettings.tres" id="8_8b5ia"]
@@ -184,6 +185,9 @@ anchor_bottom = 0.23600002
 offset_right = -236.48001
 offset_bottom = -129.92801
 text = "asdfasdfasdfasdfasdfasdfa"
+
+[node name="SawbladeTrap" parent="CanvasLayer" unique_id=1923715929 instance=ExtResource("6_0f3vc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.184564, 1.6097484, 1.0682001)
 
 [node name="ShopMenu" type="CanvasLayer" parent="." unique_id=1110994879]
 
