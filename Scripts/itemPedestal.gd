@@ -15,6 +15,7 @@ var itemPaths = [
 func _ready() -> void:
 	rng.randomize()
 	Global.roundReset.connect(spawnItem)
+	Global.playerJoined.connect(spawnItem)
 
 func spawnItem():
 	if multiplayer.get_unique_id() == 1:
@@ -26,10 +27,11 @@ func spawnItem():
 		dropInstance.setModel(loadedItem)
 		dropInstance.setAttribute("isItem", true)
 		get_tree().current_scene.totalItems += 1
-		rpc("replicateDroppedItem", loadedItem, dropLocation.global_position)
+		rpc("replicateDroppedItem", loadedItem, dropInstance.global_position)
 	
-@rpc("any_peer")
+@rpc("any_peer", "reliable")
 func replicateDroppedItem(weapon, dropPos):
+	await Global.roundReset
 	var dropInstance = weaponDrop.instantiate()
 	get_tree().root.get_node("World").add_child(dropInstance)
 	dropInstance.global_position = dropPos
