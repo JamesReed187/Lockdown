@@ -19,7 +19,7 @@ var hasInstancedTrap = false
 @onready var CROUCH_SHAPECAST : Node3D = %ShapeCast3D
 @onready var weaponController : WeaponController = $CameraController/Camera3D/WeaponRig/Weapon
 @onready var animationPlayer = $"Level Fade"
-@onready var playerlabelname = $testNameLabel
+@onready var playerlabelname = $"Name Label"
 @onready var stateMachine = $PlayerStateMachine
 @onready var copModel = $"CollisionShape3D/Cop model"
 @onready var robberModel = $"CollisionShape3D/Robber model"
@@ -65,7 +65,6 @@ func _ready():
 	CROUCH_SHAPECAST.add_exception(self)
 	Global.isMainMenu = false
 	playerlabelname.text = str(multiplayer.get_unique_id())
-	currentHeldTrap = "res://trapSystem/sawbladeTrap.tscn"
 	
 
 
@@ -168,6 +167,9 @@ func _process(delta: float) -> void:
 	if stamina < 101 and stateMachine.currentState != $PlayerStateMachine/SprintingPlayerState:
 		stamina += ceil(16.5 * delta)
 
+	if Input.is_action_just_pressed("debugAction"):
+		print("SET TRAPPEPD")
+		currentHeldTrap = "res://trapSystem/sawbladeTrap.tscn"
 
 func updateGravity(delta) -> void:
 
@@ -237,17 +239,21 @@ func placeTrap():
 	pass
 
 func holdingTrap():
-	if loadedTrap != null:
-		if hasInstancedTrap == false:
-			trapInstance = loadedTrap.instantiate()
-			get_tree().root.get_node("World").add_child(trapInstance)
-			hasInstancedTrap = true
-		if trapInstance != null:
-			if interactionCast.is_colliding():
-				trapInstance.global_position = interactionCast.get_collision_point()
-			else:
-				trapInstance.global_position = interactionCast.global_position + interactionCast.global_transform.basis * interactionCast.target_position
-		
+	if Global.myCurrentTeam == "Cop":
+		if loadedTrap != null:
+			if hasInstancedTrap == false:
+				trapInstance = loadedTrap.instantiate()
+				get_tree().root.get_node("World").add_child(trapInstance)
+				hasInstancedTrap = true
+			if trapInstance != null:
+				if interactionCast.is_colliding():
+					trapInstance.global_position = interactionCast.get_collision_point()
+				else:
+					trapInstance.global_position = interactionCast.global_position + interactionCast.global_transform.basis * interactionCast.target_position
+				if Input.is_action_just_pressed("interact"):
+					trapInstance = null
+					loadedTrap = null
+					hasInstancedTrap = false
 		
 #THIS NEEDS UPDATING TO NEW UI PLEASE
 #WILL BE ANNOUNCEMENT TEXT NOT LEVEL CHANGE

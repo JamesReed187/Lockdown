@@ -976,6 +976,7 @@ script = ExtResource("4_tg6sc")
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -5)
 collision_mask = 3
+script = ExtResource("4_tg6sc")
 
 [node name="Bullet Spawn" type="Node3D" parent="CameraController/Camera3D" unique_id=510310095]
 unique_name_in_owner = true

@@ -85,6 +85,7 @@ func _input(event):
 #If all slots full then replace current weapon, if a slot is free then fill that slot
 #If hand is free then give to hand
 func addWeapon(WeaponPath: String, defaultStats: bool, clip: int, reserve: int):
+	if not is_multiplayer_authority(): return
 	#If hand is free then give to hand
 	if weaponType == load("res://Weapons/Empty Weapon.tres") or null:
 		weaponGlobal.weaponInventory[weaponGlobal.currentWeaponIndex] = WeaponPath
@@ -419,6 +420,7 @@ func _process(delta: float) -> void:
 
 		if Input.is_action_just_pressed("reload") and weaponGlobal.clipAmmo != weaponGlobal.maxClipAmmo:
 			reloadWeapon()
+			
 
 #this is an old function for bulletholes on the world
 #Works perfectly fine but bulletholes have slight visual issues.
@@ -429,6 +431,7 @@ func removeHitMark(Instance):
 
 #This runs when you or the system attempts you drop a weapon from you
 func dropWeapon():
+	if not is_multiplayer_authority(): return
 	#Only runs if you are holding a weapon
 	if !Engine.is_editor_hint():
 		if weaponType != load("res://Weapons/Empty Weapon.tres"):
@@ -441,6 +444,10 @@ func dropWeapon():
 			#Loading the correct stats on the weapon drop allows a dropped weapon to retain stats
 			var dropInstance = weaponDrop.instantiate()
 			var dropVel = Vector3(0,0,0)
+			var dropName = "Weapon Drop %d" % weaponGlobal.rng.randi_range(1, 10000)
+			while find_child(dropName) != null:
+				dropName = "Weapon Drop %d" % weaponGlobal.rng.randi_range(1, 10000)
+			dropInstance.name = dropName
 			get_tree().root.get_node("World").add_child(dropInstance)
 			dropInstance.global_position = bulletSpawnPoint.global_position
 			dropInstance.setWeapon(currentWeapon)
@@ -458,13 +465,14 @@ func dropWeapon():
 				loadWeapon()
 
 			#Replicates the drop to the other players on the server
-			rpc("replicateDroppedWeapon", str(currentWeapon), currentClip, currentReserve, dropInstance.global_position, dropVel, Global.myCurrentTeam)
+			rpc("replicateDroppedWeapon", str(currentWeapon), currentClip, currentReserve, dropInstance.global_position, dropVel, Global.myCurrentTeam, dropName)
 
 #This function is for when another player drops their weapon
 #This creates a version on your side that has the same stats
 @rpc("any_peer")
-func replicateDroppedWeapon(weapon, clip, reserve, dropPos, dropVel, team):
+func replicateDroppedWeapon(weapon, clip, reserve, dropPos, dropVel, team, dropName):
 	var dropInstance = weaponDrop.instantiate()
+	dropInstance.setName(dropName)
 	get_tree().root.get_node("World").add_child(dropInstance)
 	dropInstance.global_position = dropPos
 	dropInstance.setWeapon(weapon)

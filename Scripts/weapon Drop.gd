@@ -45,7 +45,7 @@ func interact():
 	deleteWeaponDrop()
 	rpc("deleteWeaponDrop")
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer")
 func deleteWeaponDrop():
 	queue_free()
 
@@ -72,7 +72,8 @@ func setModel(weaponType):
 	collision.shape = convex_shape
 	collision.scale = loadedWeapon.scale
 	
-
+func setName(dropName):
+	name = dropName
 	
 func setTeam(team):
 	teamFilter = team
