@@ -923,12 +923,10 @@ shape = SubResource("CylinderShape3D_bygp4")
 
 [node name="Robber model" type="MeshInstance3D" parent="CollisionShape3D" unique_id=2120339349]
 transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 0.75, 0, 0, 0)
-visible = false
 mesh = SubResource("CapsuleMesh_6tv51")
 
 [node name="Cop model" type="MeshInstance3D" parent="CollisionShape3D" unique_id=1258850164]
 transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 0.75, 0, 0, 0)
-visible = false
 mesh = SubResource("CapsuleMesh_h7h5r")
 
 [node name="CameraController" type="Node3D" parent="." unique_id=1203649444]

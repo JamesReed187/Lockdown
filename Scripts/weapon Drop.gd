@@ -45,7 +45,7 @@ func interact():
 	deleteWeaponDrop()
 	rpc("deleteWeaponDrop")
 
-@rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "call_local")
 func deleteWeaponDrop():
 	queue_free()
 
