@@ -6,6 +6,13 @@ extends CharacterBody3D
 @export var controllerSensitivity = 2
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
+var loadedTrap = null
+var trapInstance = null
+var hasInstancedTrap = false
+@export_file("*.tscn") var currentHeldTrap = "":
+	set(value):
+		currentHeldTrap = value
+		loadedTrap = load(currentHeldTrap)
 
 @onready var CAMERA_CONTROLLER : Camera3D = $CameraController/Camera3D
 @onready var ANIMATIONPLAYER : AnimationPlayer = $AnimationPlayer
@@ -17,6 +24,7 @@ extends CharacterBody3D
 @onready var copModel = $"CollisionShape3D/Cop model"
 @onready var robberModel = $"CollisionShape3D/Robber model"
 @onready var damageVignette = $CameraController/Camera3D/CanvasLayer/damageVignette
+@onready var interactionCast = %trapPlaceCast
 
 var _mouse_input : bool = false
 var _rotation_input : float
@@ -56,6 +64,9 @@ func _ready():
 
 	CROUCH_SHAPECAST.add_exception(self)
 	Global.isMainMenu = false
+	playerlabelname.text = str(multiplayer.get_unique_id())
+	currentHeldTrap = "res://trapSystem/sawbladeTrap.tscn"
+	
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -121,18 +132,13 @@ func _physics_process(delta):
 	Global.debug.addProperty("Speed", get_real_velocity().length(), 2)
 	Global.debug.addProperty("Stamina", stamina, 2)
 
-	if stamina < 101 and stateMachine.currentState != $PlayerStateMachine/SprintingPlayerState:
-		stamina += ceil(16.5 * delta)
 
-	playerlabelname.text = str(multiplayer.get_unique_id())
 	
 	
 	## Add the gravity.
 	#if not is_on_floor():
 		#velocity.y -= gravity * delta
-	CAMERA_CONTROLLER.rotation = lerp(CAMERA_CONTROLLER.rotation, CAMERA_CONTROLLER.rotation + cameraOffset, 0.1)
-	cameraOffset = lerp(cameraOffset, Vector3(0,0,0), 0.05)
-	damageVignette.material.set_shader_parameter("intensity", move_toward(damageVignette.material.get_shader_parameter("intensity"), 0.0, 0.01))  
+	
 
 
 	if _mouse_input:
@@ -151,6 +157,17 @@ func _physics_process(delta):
 		_tilt_input = -joy_tilt * controllerSensitivity
 	else:
 		_tilt_input = 0.0
+	
+	
+func _process(delta: float) -> void:
+	holdingTrap()
+	CAMERA_CONTROLLER.rotation = lerp(CAMERA_CONTROLLER.rotation, CAMERA_CONTROLLER.rotation + cameraOffset, 0.1)
+	cameraOffset = lerp(cameraOffset, Vector3(0,0,0), 0.05)
+	damageVignette.material.set_shader_parameter("intensity", move_toward(damageVignette.material.get_shader_parameter("intensity"), 0.0, 0.01))  
+
+	if stamina < 101 and stateMachine.currentState != $PlayerStateMachine/SprintingPlayerState:
+		stamina += ceil(16.5 * delta)
+
 
 func updateGravity(delta) -> void:
 
@@ -216,7 +233,22 @@ func updatePlayerModel():
 	elif Global.myCurrentTeam == "Robber":
 		robberModel.visible = true
 
+func placeTrap():
+	pass
 
+func holdingTrap():
+	if loadedTrap != null:
+		if hasInstancedTrap == false:
+			trapInstance = loadedTrap.instantiate()
+			get_tree().root.get_node("World").add_child(trapInstance)
+			hasInstancedTrap = true
+		if trapInstance != null:
+			if interactionCast.is_colliding():
+				trapInstance.global_position = interactionCast.get_collision_point()
+			else:
+				trapInstance.global_position = interactionCast.global_position + interactionCast.global_transform.basis * interactionCast.target_position
+		
+		
 #THIS NEEDS UPDATING TO NEW UI PLEASE
 #WILL BE ANNOUNCEMENT TEXT NOT LEVEL CHANGE
 #func showLevelText(spawnText):
