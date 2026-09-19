@@ -159,6 +159,8 @@ func _physics_process(delta):
 	
 	
 func _process(delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
 	holdingTrap()
 	CAMERA_CONTROLLER.rotation = lerp(CAMERA_CONTROLLER.rotation, CAMERA_CONTROLLER.rotation + cameraOffset, 0.1)
 	cameraOffset = lerp(cameraOffset, Vector3(0,0,0), 0.05)
@@ -243,8 +245,13 @@ func holdingTrap():
 		if loadedTrap != null:
 			if hasInstancedTrap == false:
 				trapInstance = loadedTrap.instantiate()
+				var trapName = "Trap %d" % weaponGlobal.rng.randi_range(1, 10000)
+				while find_child(trapName) != null:
+					trapName = "Trap %d" % weaponGlobal.rng.randi_range(1, 10000)
+				trapInstance.name = trapName
 				get_tree().root.get_node("World").add_child(trapInstance)
 				hasInstancedTrap = true
+				#rpc("replicateTrapPlacement", currentHeldTrap, trapName)
 			if trapInstance != null:
 				if interactionCast.is_colliding():
 					trapInstance.global_position = interactionCast.get_collision_point()
@@ -254,7 +261,12 @@ func holdingTrap():
 					trapInstance = null
 					loadedTrap = null
 					hasInstancedTrap = false
-		
+#@rpc("any_peer")
+#func replicateTrapPlacement(trapPath, trapName):
+	#var clientTrapLoad = load(trapPath)
+	#var trapInstanceClient = clientTrapLoad.instantiate()
+	#trapInstanceClient.name = trapName
+	#get_tree().root.get_node("World").add_child(trapInstanceClient)
 #THIS NEEDS UPDATING TO NEW UI PLEASE
 #WILL BE ANNOUNCEMENT TEXT NOT LEVEL CHANGE
 #func showLevelText(spawnText):

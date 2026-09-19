@@ -64,6 +64,20 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_eqax0"]
 size = Vector3(3.995, 2, 1)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ckddn"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimationPlayer:current_animation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Timer:wait_time")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
 [node name="SawbladeTrap" type="Node3D" unique_id=1923715929]
 script = ExtResource("1_ckddn")
 
@@ -98,6 +112,9 @@ mesh = ExtResource("2_ckddn")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Base" unique_id=1443853967]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.4000001, 0)
 shape = SubResource("BoxShape3D_eqax0")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1065677948]
+replication_config = SubResource("SceneReplicationConfig_ckddn")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="damageTimer" to="." method="_on_damage_timer_timeout"]
