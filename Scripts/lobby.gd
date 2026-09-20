@@ -5,6 +5,8 @@ extends Node
 @onready var hud = $UserInterface
 @onready var myIDref = multiplayer.get_unique_id()
 @onready var loading = $CanvasLayer/Loading
+@onready var menuMusicNode = $CanvasLayer/MenuMusic
+@onready var menuBackground = $"CanvasLayer/Menu Background"
 
 @onready var GUI = $GUIwindow
 @onready var GUI_viewport = %SubViewport
@@ -39,8 +41,9 @@ var totalItems = 0
 
 func _on_host_button_pressed():
 
-	main_menu.hide()
+	hideMainMenu()
 	hud.show()
+	
 
 	# Allow 2 remote clients.
 	# The host counts as the third player.
@@ -61,12 +64,10 @@ func _on_host_button_pressed():
 
 	print("Server started.")
 	print("Maximum players: ", MAX_PLAYERS)
-
+	loading.visible = false
 
 func _on_join_button_pressed():
-
-	main_menu.hide()
-	loading.visible = true
+	hideMainMenu()
 	hud.show()
 
 	var error
@@ -78,12 +79,11 @@ func _on_join_button_pressed():
 
 	if error != OK:
 		print("Failed to create client. Error: ", error)
-		loading.hide()
 		return
 
 	multiplayer.multiplayer_peer = enet_peer
 
-	loading.hide()
+	loading.visible = false
 
 
 func _ready() -> void:
@@ -104,6 +104,7 @@ func _ready() -> void:
 	Global.recreatePlayers()
 	Global.updateSpawnPoints(cop_spawns, robber_spawns)
 	Global.respawnPlayers()
+	menuMusicNode.playing = true
 	
 	
 	#var DebugPanel = debWin.instantiate()
@@ -483,3 +484,9 @@ func updateAlivePlayers(team):
 				elif t == "Robber":
 					Global.aliveRobberCount += 1
 			resetRound()
+
+func hideMainMenu():
+	menuMusicNode.playing = false
+	loading.visible = true
+	menuBackground.visible = false
+	main_menu.hide()

@@ -394,7 +394,6 @@ offset_bottom = 77.0
 [node name="MyIdLabel" type="Label" parent="UserInterface/MYidVbox" unique_id=1674277987]
 unique_name_in_owner = true
 layout_mode = 2
-text = "aaaawagga"
 
 [node name="PauseLayer" type="CanvasLayer" parent="." unique_id=957366646]
 visible = false

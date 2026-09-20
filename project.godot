@@ -23,6 +23,12 @@ Global="*uid://fpoxeuvyuyg5"
 weaponGlobal="*uid://dv1ap210n0c1r"
 moneyGlobal="*uid://cu6pt5kgvjpdd"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+
 [dotnet]
 
 project/assembly_name="MultiplayerFPSTemplate"
