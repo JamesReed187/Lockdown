@@ -106,6 +106,8 @@ func _ready() -> void:
 	Global.respawnPlayers()
 	menuMusicNode.playing = true
 	
+	update_money_display()
+
 	
 	#var DebugPanel = debWin.instantiate()
 	#add_child(DebugPanel)
@@ -345,6 +347,8 @@ func _physics_process(delta):
 
 		pause()
 
+
+
 func _unhandled_input(_event):
 
 	if Input.is_action_just_pressed("quit"):
@@ -383,9 +387,7 @@ func _on_Quit_button_pressed() -> void:
 
 
 
-var minitask = preload(
-	"res://gameMechanics/hacking_minitask.tscn"
-).instantiate()
+var minitask = preload("res://gameMechanics/hacking_minitask.tscn").instantiate()
 
 var active_instance: Node = null
 
@@ -490,3 +492,11 @@ func hideMainMenu():
 	loading.visible = true
 	menuBackground.visible = false
 	main_menu.hide()
+
+# Money balance
+var current_balance = moneyGlobal.get_bank_balance()
+@onready var money = $%moneyLabel
+
+func update_money_display() -> void:
+	money.text = "Money: " + str(current_balance)
+	print("Player wallet: " + str(current_balance))
