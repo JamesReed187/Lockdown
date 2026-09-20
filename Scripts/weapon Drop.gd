@@ -31,6 +31,8 @@ var loadedWeapon
 func _ready():
 	if weaponPath != null:
 		setModel(weaponPath)
+	Global.roundReset.connect(deleteWeaponDrop)
+	Global.playerJoined.connect(deleteWeaponDrop)
 	
 
 
@@ -70,7 +72,8 @@ func setModel(weaponType):
 	collision.shape = convex_shape
 	collision.scale = loadedWeapon.scale
 	
-
+func setName(dropName):
+	name = dropName
 	
 func setTeam(team):
 	teamFilter = team

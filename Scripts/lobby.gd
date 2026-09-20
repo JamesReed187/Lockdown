@@ -1,16 +1,18 @@
 extends Node
 
 @onready var main_menu = $CanvasLayer/MainMenu
-@onready var address_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/AddressEntry
+@onready var address_entry = $CanvasLayer/MainMenu/PanelContainer/VBoxContainer/AddressEntry
 @onready var hud = $UserInterface
 @onready var myIDref = multiplayer.get_unique_id()
 @onready var loading = $CanvasLayer/Loading
+@onready var menuMusicNode = $CanvasLayer/MenuMusic
+@onready var menuBackground = $"CanvasLayer/Menu Background"
 
 @onready var GUI = $GUIwindow
 @onready var GUI_viewport = %SubViewport
 @export var GUI_window: Window
 
-@onready var Player = preload("res://controllers/fps_controller.tscn")
+@onready var PlayerScene = preload("res://controllers/fps_controller.tscn")
 
 @onready var cop_spawns = $SpawnPoints2/Cops.get_children()
 @onready var robber_spawns = $SpawnPoints2/Robber.get_children()
@@ -39,8 +41,9 @@ var totalItems = 0
 
 func _on_host_button_pressed():
 
-	main_menu.hide()
+	hideMainMenu()
 	hud.show()
+	
 
 	# Allow 2 remote clients.
 	# The host counts as the third player.
@@ -61,12 +64,10 @@ func _on_host_button_pressed():
 
 	print("Server started.")
 	print("Maximum players: ", MAX_PLAYERS)
-
+	loading.visible = false
 
 func _on_join_button_pressed():
-
-	main_menu.hide()
-	loading.visible = true
+	hideMainMenu()
 	hud.show()
 
 	var error
@@ -78,12 +79,11 @@ func _on_join_button_pressed():
 
 	if error != OK:
 		print("Failed to create client. Error: ", error)
-		loading.hide()
 		return
 
 	multiplayer.multiplayer_peer = enet_peer
 
-	loading.hide()
+	loading.visible = false
 
 
 func _ready() -> void:
@@ -104,7 +104,10 @@ func _ready() -> void:
 	Global.recreatePlayers()
 	Global.updateSpawnPoints(cop_spawns, robber_spawns)
 	Global.respawnPlayers()
+	menuMusicNode.playing = true
 	
+	update_money_display()
+
 	
 	#var DebugPanel = debWin.instantiate()
 	#add_child(DebugPanel)
@@ -140,7 +143,7 @@ func add_player(peer_id: int):
 		print("Cannot add player. Lobby is full.")
 		return
 
-	var new_player = Player.instantiate()
+	var new_player = PlayerScene.instantiate()
 
 	new_player.name = str(peer_id)
 
@@ -158,6 +161,8 @@ func add_player(peer_id: int):
 
 	print("Player ", peer_id, " joined.")
 	print("Playercount is ", playercount, "/", MAX_PLAYERS)
+	print(multiplayer.get_unique_id())
+	Global.playerJoined.emit()
 
 
 
@@ -201,24 +206,29 @@ func assign_team(id):
 	if !multiplayer.is_server():
 		return
 
-	var cop_count = 0
-	var robber_count = 0
+	Global.cop_count = 0
+	Global.robber_count = 0
+	Global.aliveCopCount = 0
+	Global.aliveRobberCount = 0
 
 	for t in teams.values():
 
 		if t == "Cop":
-			cop_count += 1
+			Global.cop_count += 1
+			Global.aliveCopCount += 1
 
 		elif t == "Robber":
-			robber_count += 1
+			Global.robber_count += 1
+			Global.aliveRobberCount += 1
 
 	var team
 
-	if cop_count > robber_count:
+	if Global.cop_count > Global.robber_count:
 		team = "Robber"
 
-	elif robber_count > cop_count:
+	elif Global.robber_count > Global.cop_count:
 		team = "Cop"
+
 
 	else:
 		team = "Cop" if randi() % 2 == 0 else "Robber"
@@ -226,6 +236,13 @@ func assign_team(id):
 	teams[id] = team
 
 	print("Player ", id, " assigned to ", team)
+	
+	if team == "Cop":
+		Global.aliveCopCount += 1
+		print("COP IS ALIVE")
+	elif team == "Robber":
+		Global.aliveRobberCount += 1
+		print("ROBBER IS ALOVE")
 
 	# Update local player's team
 	if id == multiplayer.get_unique_id():
@@ -325,9 +342,12 @@ func upnp_setup():
 
 func _physics_process(delta):
 
+
 	if Input.is_action_just_pressed("PauseMenu"):
 
 		pause()
+
+
 
 func _unhandled_input(_event):
 
@@ -367,9 +387,7 @@ func _on_Quit_button_pressed() -> void:
 
 
 
-var minitask = preload(
-	"res://gameMechanics/hacking_minitask.tscn"
-).instantiate()
+var minitask = preload("res://gameMechanics/hacking_minitask.tscn").instantiate()
 
 var active_instance: Node = null
 
@@ -417,11 +435,68 @@ func _on_exit_game_pressed() -> void:
 
 	get_tree().quit()
 
+func showAnnounceText(text : String):
+	var announceBox = $"UserInterface/Spawn Text"
+	var announceLabel = %AnnounceLabel
+	announceLabel.text = text
+	announceBox.show()
+	await get_tree().create_timer(3.0).timeout
+	announceBox.hide()
+
+@rpc("reliable", "any_peer")
 func exitTrapSetup():
 	if trapSetupMode == true:
 		trapSetupMode = false
+		Global.roundReset.emit()
 		Global.respawnPlayers()
+		showAnnounceText("Rob stuff I guess")
 
 func resetRound():
 	Global.roundReset.emit()
 	Global.respawnPlayers()
+	trapSetupMode = true
+	rpc("recieveReset")
+	if Global.myCurrentTeam == "Cop":
+		showAnnounceText("Trap setup mode")
+		
+@rpc("reliable", "any_peer")
+func recieveReset():
+	Global.roundReset.emit()
+	Global.respawnPlayers()
+	trapSetupMode = true
+	if Global.myCurrentTeam == "Cop":
+		showAnnounceText("Trap setup mode")
+
+@rpc("reliable", "call_local", "any_peer")
+func updateAlivePlayers(team):
+	if multiplayer.get_unique_id() == 1:
+		if team == "Cop":
+			Global.aliveCopCount -= 1
+		elif team == "Robber":
+			Global.aliveRobberCount -= 1
+		
+		if Global.aliveCopCount <= 0 or Global.aliveRobberCount <= 0:
+			Global.aliveCopCount = 0
+			Global.aliveRobberCount = 0
+			for t in teams.values():
+
+				if t == "Cop":
+					Global.aliveCopCount += 1
+
+				elif t == "Robber":
+					Global.aliveRobberCount += 1
+			resetRound()
+
+func hideMainMenu():
+	menuMusicNode.playing = false
+	loading.visible = true
+	menuBackground.visible = false
+	main_menu.hide()
+
+# Money balance
+var current_balance = moneyGlobal.get_bank_balance()
+@onready var money = $%moneyLabel
+
+func update_money_display() -> void:
+	money.text = "Money: " + str(current_balance)
+	print("Player wallet: " + str(current_balance))

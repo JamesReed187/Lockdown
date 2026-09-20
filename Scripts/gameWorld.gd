@@ -106,19 +106,54 @@ func swap_to_new_instance():
 		add_child(new_instance)
 		active_instance = new_instance
 
+func showAnnounceText(text : String):
+	var announceBox = $"UserInterface/Spawn Text"
+	var announceLabel = %AnnounceLabel
+	announceLabel.text = text
+	announceBox.show()
+	await get_tree().create_timer(3.0).timeout
+	announceBox.hide()
+
+@rpc("reliable", "any_peer")
 func exitTrapSetup():
 	if trapSetupMode == true:
 		trapSetupMode = false
+		Global.roundReset.emit()
 		Global.respawnPlayers()
+		showAnnounceText("Rob stuff I guess")
 
 func resetRound():
-	if get_tree().get_network_unique_id() == 1:
-		Global.roundReset.emit()
-		Global.respawnPlayers()
-		rpc("recieveReset")
-
-@rpc("reliable")
+	Global.roundReset.emit()
+	Global.respawnPlayers()
+	trapSetupMode = true
+	rpc("recieveReset")
+	if Global.myCurrentTeam == "Cop":
+		showAnnounceText("Trap setup mode")
+		
+@rpc("reliable", "any_peer")
 func recieveReset():
-	if get_tree().get_network_unique_id() != 1:
-		Global.roundReset.emit()
-		Global.respawnPlayers()
+	Global.roundReset.emit()
+	Global.respawnPlayers()
+	trapSetupMode = true
+	if Global.myCurrentTeam == "Cop":
+		showAnnounceText("Trap setup mode")
+
+@rpc("reliable", "call_local", "any_peer")
+func updateAlivePlayers(team):
+	if multiplayer.get_unique_id() == 1:
+		if team == "Cop":
+			Global.aliveCopCount -= 1
+		elif team == "Robber":
+			Global.aliveRobberCount -= 1
+		
+		if Global.aliveCopCount <= 0 or Global.aliveRobberCount <= 0:
+			Global.aliveCopCount = 0
+			Global.aliveRobberCount = 0
+			for t in teams.values():
+
+				if t == "Cop":
+					Global.aliveCopCount += 1
+
+				elif t == "Robber":
+					Global.aliveRobberCount += 1
+			resetRound()
