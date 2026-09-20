@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b8c4woxccl27v" path="res://Textures/Menu Background.png" id="5_bbmoa"]
 [ext_resource type="Theme" uid="uid://de2nek577lf7m" path="res://controllers/Themes/UI/Debug.tres" id="5_lwfgy"]
 [ext_resource type="PackedScene" uid="uid://ha8gav5g5u7l" path="res://trapSystem/sawbladeTrap.tscn" id="6_0f3vc"]
+[ext_resource type="Texture2D" uid="uid://el1jrwdua5i0" path="res://assets/images/logo.png" id="6_4jmuv"]
 [ext_resource type="Script" uid="uid://dvspsmhr73myh" path="res://controllers/scripts/debug_panel.gd" id="6_r1245"]
 [ext_resource type="LabelSettings" uid="uid://dskxen8j6183q" path="res://controllers/materials/Ammo Counter Label Settings.tres" id="7_ftq4a"]
 [ext_resource type="LabelSettings" uid="uid://ymbpk3yphr8i" path="res://controllers/materials/InteractionLabelSettings.tres" id="8_8b5ia"]
@@ -37,6 +38,19 @@ glow_enabled = true
 [sub_resource type="BoxShape3D" id="BoxShape3D_ftq4a"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bbmoa"]
+font_size = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jmuv"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0.85882354)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_0f3vc"]
 font_size = 32
@@ -151,7 +165,8 @@ offset_transform_enabled = true
 mouse_filter = 2
 texture = ExtResource("5_bbmoa")
 
-[node name="MainMenu" type="PanelContainer" parent="CanvasLayer" unique_id=1311570075]
+[node name="MainMenu" type="Control" parent="CanvasLayer" unique_id=111062336]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -162,37 +177,60 @@ offset_bottom = -227.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenu" unique_id=1657551070]
-layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/MarginContainer" unique_id=326002742]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="Lockdown Label" type="Label" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1369319182]
-layout_mode = 2
+[node name="Lockdown Label" type="Label" parent="CanvasLayer/MainMenu" unique_id=1369319182]
+layout_mode = 0
+offset_left = 17.0
+offset_top = -19.0
+offset_right = 451.0
+offset_bottom = 80.0
 text = "Lockdown"
 label_settings = SubResource("LabelSettings_bbmoa")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SinglePlayer" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1335163066]
+[node name="Logo" type="TextureRect" parent="CanvasLayer/MainMenu/Lockdown Label" unique_id=82360192]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 24.0
+offset_right = 1066.0
+offset_bottom = 1048.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("6_4jmuv")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/MainMenu" unique_id=2103749720]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MainMenu" unique_id=1061242437]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 93.0
+offset_right = 337.0
+offset_bottom = 241.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4jmuv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/PanelContainer" unique_id=124688559]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MainMenu/PanelContainer/VBoxContainer" unique_id=880068373]
+layout_mode = 2
+
+[node name="SinglePlayer" type="Button" parent="CanvasLayer/MainMenu/PanelContainer/VBoxContainer" unique_id=1335163066]
+custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 text = "Single Player"
 
-[node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1093809675]
+[node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/PanelContainer/VBoxContainer" unique_id=1093809675]
 layout_mode = 2
 text = "Host"
 
-[node name="JoinButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=1953976071]
+[node name="JoinButton" type="Button" parent="CanvasLayer/MainMenu/PanelContainer/VBoxContainer" unique_id=1953976071]
 layout_mode = 2
 text = "Join"
 
-[node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer" unique_id=459800446]
+[node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/PanelContainer/VBoxContainer" unique_id=459800446]
 layout_mode = 2
 placeholder_text = "Enter Address to Join Here"
 alignment = 1
@@ -217,9 +255,6 @@ grow_vertical = 2
 text = "Loading..."
 label_settings = SubResource("LabelSettings_0f3vc")
 horizontal_alignment = 1
-
-[node name="SawbladeTrap" parent="CanvasLayer" unique_id=1923715929 instance=ExtResource("6_0f3vc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.184564, 1.6097484, 1.0682001)
 
 [node name="ShopMenu" type="CanvasLayer" parent="." unique_id=1110994879]
 
@@ -512,10 +547,13 @@ mesh = SubResource("BoxMesh_yy6u7")
 [node name="InteractObject" parent="." unique_id=1565446478 instance=ExtResource("17_wm471")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.93946, 2.4999998, -5.326315)
 
+[node name="SawbladeTrap" parent="." unique_id=1923715929 instance=ExtResource("6_0f3vc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.184564, 1.6097484, 1.0682001)
+
 [connection signal="body_entered" from="Terminal/Area3D" to="." method="_GUI_window_open"]
 [connection signal="close_requested" from="GUIwindow" to="GUIwindow" method="_GUI_window_close"]
-[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/VBoxContainer/SinglePlayer" to="." method="_on_single_player_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/PanelContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="spawned" from="SpawnPoints" to="." method="_on_multiplayer_spawner_spawned"]
 [connection signal="pressed" from="PauseLayer/PausePanel/PauseVbox/ExitGame" to="." method="_on_exit_game_pressed"]

@@ -1,7 +1,7 @@
 extends Node
 
 @onready var main_menu = $CanvasLayer/MainMenu
-@onready var address_entry = $CanvasLayer/MainMenu/MarginContainer/VBoxContainer/AddressEntry
+@onready var address_entry = $CanvasLayer/MainMenu/PanelContainer/VBoxContainer/AddressEntry
 @onready var hud = $UserInterface
 @onready var myIDref = multiplayer.get_unique_id()
 @onready var loading = $CanvasLayer/Loading
@@ -12,7 +12,7 @@ extends Node
 @onready var GUI_viewport = %SubViewport
 @export var GUI_window: Window
 
-@onready var Player = preload("res://controllers/fps_controller.tscn")
+@onready var PlayerScene = preload("res://controllers/fps_controller.tscn")
 
 @onready var cop_spawns = $SpawnPoints2/Cops.get_children()
 @onready var robber_spawns = $SpawnPoints2/Robber.get_children()
@@ -141,7 +141,7 @@ func add_player(peer_id: int):
 		print("Cannot add player. Lobby is full.")
 		return
 
-	var new_player = Player.instantiate()
+	var new_player = PlayerScene.instantiate()
 
 	new_player.name = str(peer_id)
 
